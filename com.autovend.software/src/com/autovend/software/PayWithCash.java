@@ -1,4 +1,4 @@
-/*
+
 package com.autovend.software;
 
 import com.autovend.*;
@@ -69,5 +69,11 @@ public void notifyCustomer() {
 	
 }
 
+@Override
+public void notifyCustomerSessionComplete() {
+	// TODO Auto-generated method stub
+	
+}
 
-}*/
+
+}
