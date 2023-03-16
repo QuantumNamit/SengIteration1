@@ -1,5 +1,8 @@
 package com.autovend.software;
 
-public class CustomerObserver {
+public interface CustomerObserver {
+
+    public void notifyCustomer();
 
 }
+
