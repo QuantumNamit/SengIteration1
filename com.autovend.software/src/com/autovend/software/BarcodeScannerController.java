@@ -1,5 +1,4 @@
 package com.autovend.software;
-
 import com.autovend.Barcode;
 import com.autovend.devices.AbstractDevice;
 import com.autovend.devices.BarcodeScanner;
@@ -12,23 +11,22 @@ import java.util.ArrayList;
 
 public class BarcodeScannerController implements BarcodeScannerObserver {
 
-	    private ArrayList<BarcodedProduct> bp =new ArrayList<>();
-	    
-	    @Override
-	    public void reactToEnabledEvent(AbstractDevice<? extends AbstractDeviceObserver> device) {
+    private ArrayList<BarcodedProduct> bp =new ArrayList<>();
+    @Override
+    public void reactToEnabledEvent(AbstractDevice<? extends AbstractDeviceObserver> device) {
 
-	    }
+    }
 
-	    @Override
-	    public void reactToDisabledEvent(AbstractDevice<? extends AbstractDeviceObserver> device) {
+    @Override
+    public void reactToDisabledEvent(AbstractDevice<? extends AbstractDeviceObserver> device) {
 
-	    }
+    }
 
-	    @Override
-	    public void reactToBarcodeScannedEvent(BarcodeScanner barcodeScanner, Barcode barcode) {
+    @Override
+    public void reactToBarcodeScannedEvent(BarcodeScanner barcodeScanner, Barcode barcode) {
 
-	        BarcodedProduct product = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
-	        bp.add(product);
+        BarcodedProduct product = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
+        bp.add(product);
 
-	    }
-	}
+    }
+}

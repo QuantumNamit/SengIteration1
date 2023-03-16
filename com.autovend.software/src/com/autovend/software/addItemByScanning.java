@@ -1,76 +1,76 @@
 package com.autovend.software;
+import com.autovend.Barcode;
+import com.autovend.BarcodedUnit;
+import com.autovend.SellableUnit;
+import com.autovend.devices.BarcodeScanner;
+import com.autovend.devices.ElectronicScale;
+import com.autovend.devices.SelfCheckoutStation;
+import com.autovend.devices.SimulationException;
+import com.autovend.products.BarcodedProduct;
 
-	
-	import com.autovend.Barcode;
-	import com.autovend.SellableUnit;
-	import com.autovend.devices.BarcodeScanner;
-	import com.autovend.devices.SelfCheckoutStation;
-	import com.autovend.devices.SimulationException;
-	import com.autovend.products.BarcodedProduct;
-
-	import java.math.BigDecimal;
-
-
-	public class addItemByScanning  extends addItem implements CustomerObserver {
+import java.math.BigDecimal;
 
 
-	    private SelfCheckoutStation slf;
-	    private Barcode barcode;
-	    private String description;
-	    private double weight;
-	    private BigDecimal cost;
-
-	    public addItemByScanning(SellableUnit item, BarcodedProduct product){
-
-	        // all the general information about the item
-
-	        super(item, product);
-
-	        // information about the item if adding the item by scanning the barcode
-
-	            this.barcode=product.getBarcode();
-	            this.description= product.getDescription();
-
-	    }
+public class addItemByScanning  extends addItem implements CustomerObserver {
 
 
-	   public void scanItem(BarcodeScanner barcodeScanner,SellableUnit item, BarcodedProduct product) throws Exception {
+    private SelfCheckoutStationController slf;
+    private Barcode barcode;
+    private String description;
+    private double weight;
+    private BigDecimal cost;
+    BarcodedUnit item;
 
-	       // laser scanner scans the items and if successful it will notify all the Barcode Scanner observers
-	       if(barcodeScanner.scan(item)){
+    public addItemByScanning(BarcodedUnit item, BarcodedProduct product){
 
-	            //  should block out the self checkout station form further customer interaction
-	           block_selfcheckout();
+        // all the general information about the item
 
-	           weight= item.getWeight();
-	           cost=product.getPrice();
+        super(item, product);
 
-	           expectedWeightUpdate(item,product);
+        // information about the item if adding the item by scanning the barcode
 
-	           // notify customer to place the item
+            this.barcode=product.getBarcode();
+            this.description= product.getDescription();
 
-	           notifyCustomer();
-
-	           // bagging area weight change signal
-	           bagging_area_weight_change(slf);
-	           if(bagging_area_weight_change(slf)!=expectedWeightUpdate(item,product)){
-	              throw new Exception("Weight Discrepancy Occurred");
-	           }
-
-	           // unblock selfcheckout station
-	           unblock_selfcheckout();
+    }
 
 
-	       }
+   public void scanItem(BarcodeScanner barcodeScanner, BarcodedUnit item, BarcodedProduct product, SelfCheckoutStationController slf) throws Exception {
 
-	   }
+       // laser scanner scans the items and if successful it will notify all the Barcode Scanner observers
+       if(barcodeScanner.scan(item)){
 
+            //  should block out the self checkout station form further customer interaction
+           block_selfcheckout(slf);
 
-	    @Override
-	    public void notifyCustomer() {
-	        System.out.println("Enter the item to the Bagging Area ");
-	    }
-	}
+           weight= item.getWeight();
+           cost=product.getPrice();
 
+           expectedWeightUpdate(slf.baggingArea,product);
 
+           // notify customer to place the item
 
+           notifyCustomer();
+
+       //    bagging_area_weight_change(scale,product.getBarcode(),itemWeight);
+           if(expectedWeightUpdate(slf.baggingArea,product)!= bagging_area_weight_change(slf.baggingArea,product.getBarcode(), item.getWeight())){
+              throw new Exception("Weight Discrepancy Occurred");
+           }
+
+           // unblock selfcheckout station
+           unblock_selfcheckout(slf);
+
+       }
+
+  }
+
+    @Override
+    public void notifyCustomer() {
+        System.out.println("Enter the item to the Bagging Area ");
+    }
+
+    @Override
+    public void notifyCustomerSessionComplete() {
+
+    }
+}
