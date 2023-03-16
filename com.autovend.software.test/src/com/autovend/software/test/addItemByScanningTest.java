@@ -19,7 +19,7 @@ import java.util.Currency;
 
 import static org.junit.Assert.*;
 
-public class addItemScanningTest {
+public class addItemByScanningTest {
 
     @Test
     public void scanItem_checking_successful_scan() throws Exception {
