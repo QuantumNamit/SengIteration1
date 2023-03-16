@@ -1,6 +1,4 @@
-
-
-
+/*
 package com.autovend.software;
 
 import com.autovend.*;
@@ -41,6 +39,7 @@ public PayWithCash() {
 }
 
 public void insertedCash() {
+	
 	while(paidinFull==false) {
 	
 		if (Cash_Inserted>0) {
@@ -71,4 +70,4 @@ public void notifyCustomer() {
 }
 
 
-}
+}*/
