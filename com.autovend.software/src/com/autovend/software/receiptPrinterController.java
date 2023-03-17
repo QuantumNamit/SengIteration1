@@ -1,5 +1,4 @@
 package com.autovend.software;
-
 import com.autovend.devices.AbstractDevice;
 import com.autovend.devices.ReceiptPrinter;
 import com.autovend.devices.SelfCheckoutStation;
@@ -9,7 +8,7 @@ import com.autovend.devices.observers.ReceiptPrinterObserver;
 public class receiptPrinterController implements ReceiptPrinterObserver {
 
     private ReceiptPrinter receiptPrinter;
-    private SelfCheckoutStationController slf;
+
 
     @Override
     public void reactToEnabledEvent(AbstractDevice<? extends AbstractDeviceObserver> device) {
@@ -41,6 +40,7 @@ public class receiptPrinterController implements ReceiptPrinterObserver {
 
     }
 
+
     public boolean outOfInk(int ink_remaining){
 
             if(ink_remaining==0){
@@ -63,7 +63,7 @@ public class receiptPrinterController implements ReceiptPrinterObserver {
         }
     }
 
-    public void abortPrinting(){
+    public void abortPrinting(SelfCheckoutStationController slf){
         // Suspend station
          slf.disable(slf);
     }
