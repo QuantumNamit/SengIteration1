@@ -41,7 +41,7 @@ public class receiptPrinterSoftwareTest {
         BigDecimal b =new BigDecimal(2);
         coindeno[0]=a;
 
-        SelfCheckoutStationController slf=new SelfCheckoutStationController(currency,deno,coindeno,3,3);
+        SystemController slf=new SystemController(currency,deno,coindeno,3,3);
 
 
         AttendantObserver observer = new AttendantObserver() {
@@ -91,7 +91,7 @@ public class receiptPrinterSoftwareTest {
         coindeno[0]=a;
         coindeno[1]=b;
 
-        SelfCheckoutStationController slf=new SelfCheckoutStationController(currency,deno,coindeno,3,3);
+        SystemController slf=new SystemController(currency,deno,coindeno,3,3);
 
         AttendantObserver observer = new AttendantObserver() {
             @Override
@@ -138,7 +138,7 @@ public class receiptPrinterSoftwareTest {
         coindeno[0]=a;
         coindeno[1]=b;
 
-        SelfCheckoutStationController slf=new SelfCheckoutStationController(currency,deno,coindeno,3,3);
+        SystemController slf=new SystemController(currency,deno,coindeno,3,3);
 
         AttendantObserver observer = new AttendantObserver() {
             @Override

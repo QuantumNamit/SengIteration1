@@ -86,7 +86,7 @@ public PayWithCash(int TotalAmount, int BillInserted) {
 	paidinFull=false;
 }
 // Scenario 1 Cash I/O: Signals the insertion of coins and banknotes to the System.
-public int Getting_Bill_Value(Bill bill, BillValidator billVAlidator) {
+public int Getting_Bill_Value(Bill bill, BillValidator billValidator) {
 	int x=0;
 	if (billValidator.accept(bill)) {
 		x=bill.getValue();
