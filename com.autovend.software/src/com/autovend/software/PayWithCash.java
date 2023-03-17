@@ -91,6 +91,41 @@ public void Cash_Algorithm() {
 	}
 }
 
+public void Change_Function() {
+	// Number of Bills to output
+	int num_of_Bills;
+
+	while (Change>5) {
+		if (Change>=100 ) {
+			num_of_Bills= Change / 100;
+			// Emit {num_of_bills} of 100
+			Change = Change - num_of_Bills*100;
+			}
+		if (Change >=50) {
+			num_of_Bills= Change / 50;
+			// Emit {num_of_bills} of 50
+			Change = Change - num_of_Bills*50;
+		}
+		if (Change >=20) {
+			num_of_Bills= Change / 20;
+			// Emit {num_of_bills} of 20
+			Change = Change - num_of_Bills*20;
+		}
+		if (Change >=10) {
+			num_of_Bills= Change / 10;
+			// Emit {num_of_bills} of 10
+			Change = Change - num_of_Bills*10;
+		}
+		if (Change >=5) {
+			num_of_Bills= Change / 5;
+			// Emit {num_of_bills} of 5
+			Change = Change - num_of_Bills*5;
+		}
+		
+	}
+	
+}
+
 public int Getting_Bill_Value(Bill bill, BillValidator billVAlidator) {
 	int x=0;
 	if (billVAlidator.accept(bill)) {
