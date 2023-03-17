@@ -1,5 +1,6 @@
 // Group Members
 // Abrar Zawad Safwan -30150892
+// Faiyaz Altaf Pranto - 30162576
 // Add your names here*
 
 
@@ -42,7 +43,7 @@ banknote.
 public class PayWithCash implements CustomerObserver {
 		private Currency currency;
 		private int value;
-	// Variable for cash inserted
+		// Variable for cash inserted
 		private int[] Denominations;
 		private BigDecimal[] coinDenominations;
 		private int  Cash_Inserted;
@@ -85,6 +86,7 @@ public PayWithCash(int TotalAmount, int BillInserted) {
 	Change=0;
 	paidinFull=false;
 }
+
 // Scenario 1 Cash I/O: Signals the insertion of coins and banknotes to the System.
 public int Getting_Bill_Value(Bill bill, BillValidator billValidator) {
 	int x=0;
@@ -104,29 +106,31 @@ public void initialization(Bill bill, BillValidator billValidator) {
 	paidinFull=false;
 }
 
-/* Scenario 2: System: Reduces the remaining amount due by the value of the inserted cash.
+/** 
+2. System: Reduces the remaining amount due by the value of the inserted cash.
+3. System: Signals to the Customer I/O the updated amount due after the insertion of each coin or banknote.
 4. Customer I/O: Updates the amount due displayed to the customer.
-5. System: If the remaining amount due is greater than 0, go to 1.
-6. System: If the remaining amount due is less than 0, signal to Cash I/O the amount of change due.
-*/
+**/
 public void Cash_Algorithm(Bill bill) {
 	
 	while(paidinFull==false) {
-	
 		if (Cash_Inserted>0) {
-		Amount_Paid+=Cash_Inserted;
-		Amount_Due = Total_Amount- Amount_Paid;
+			Amount_Paid+=Cash_Inserted;
+			Amount_Due = Total_Amount - Amount_Paid;
 		
+			// 5. System: If the remaining amount due is greater than 0, go to 1.
 			if (Amount_Due > 0) {
 				paidinFull =false;
 				System.out.printf("Your new amount due is : %d CAD.", Amount_Due );
 				Cash_Inserted=bill.getValue();
 			
 			}
+			// 6. System: If the remaining amount due is less than 0, signal to Cash I/O the amount of change due.
 			else if (Amount_Due < 0) {
-			// Calculates the change	
-			Change = Amount_Due*-1;
-			System.out.printf("Your Change is: %d CAD.", Change );
+				// Calculates the change	
+				Change = Amount_Due*-1;
+				System.out.printf("Your Change is: %d CAD.", Change);
+				Change_Function();
 				paidinFull=true;
 				Cash_Inserted=bill.getValue();
 			}
@@ -134,6 +138,11 @@ public void Cash_Algorithm(Bill bill) {
 				paidinFull=true;
 			}
 		}
+	}
+	// 8. Once payment in full is made and change returned to the customer, see Print Receipt.
+	// calls print receipt when paid in full is true
+	if (paidinFull == true) {
+		PrintReceipt();
 	}
 }
 
@@ -147,6 +156,7 @@ public void Change_Function() {
 		if (Change>=100 ) {
 			num_of_Bills= Change / 100;
 			Change = Change - num_of_Bills*100;
+		}
 	
 		if (Change >=50) {
 			num_of_Bills= Change / 50;
@@ -169,16 +179,14 @@ public void Change_Function() {
 			Change = Change - num_of_Bills*5;
 		}
 		// Exception 2 : Insufficient change
-		if (Change >0) {
+		if (Change > 0) {
 			System.out.println("Station is Suspended. Please wait for assistance.");
+			
 		}
 		
 	}
 }
-}
 
-//8. Once payment in full is made and change returned to the customer, see Print Receipt.
-// calls print receipt when paid in full is true
 public void PrintReceipt() {
 	receiptPrinterSoftware receipt = new receiptPrinterSoftware(items);
 }	
@@ -196,11 +204,13 @@ public void notifyCustomerSessionComplete() {
 	
 }
 
+/**
 @Override
 public void notifyCustomer_Amount_Due() {
 	// TODO Auto-generated method stub
 	
 }
+**/
 
 
 }
