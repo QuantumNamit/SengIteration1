@@ -224,7 +224,7 @@ public class SelfCheckoutStation {
 		validatorSource = new BidirectionalChannel<Bill>(slot, validator);
 		slot.connect(validatorSource);
 	}
-
+	
 	private void interconnect(BillValidator validator, BillStorage storage) {
 		UnidirectionalChannel<Bill> bc = new UnidirectionalChannel<Bill>(storage);
 		validator.connect(validatorSource, bc);

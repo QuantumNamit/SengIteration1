@@ -60,7 +60,7 @@ public class BillSlot extends AbstractDevice<BillSlotObserver> implements Accept
 
 		if(isDisabled())
 			throw new DisabledException();
-
+		
 		if(danglingEjectedBill != null)
 			throw new OverloadException("A bill is dangling from the slot. Remove that before adding another.");
 

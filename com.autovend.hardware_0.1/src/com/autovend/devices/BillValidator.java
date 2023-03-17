@@ -166,7 +166,7 @@ public final class BillValidator extends AbstractDevice<BillValidatorObserver>
 			return false;
 		}
 	}
-
+	
 	@Override
 	public boolean hasSpace() {
 		return true;

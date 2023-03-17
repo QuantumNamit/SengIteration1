@@ -2,6 +2,7 @@ package com.autovend.software;
 import com.autovend.Barcode;
 import com.autovend.devices.AbstractDevice;
 import com.autovend.devices.BarcodeScanner;
+import com.autovend.devices.BillSlot;
 import com.autovend.devices.observers.AbstractDeviceObserver;
 import com.autovend.devices.observers.BarcodeScannerObserver;
 import com.autovend.external.ProductDatabases;

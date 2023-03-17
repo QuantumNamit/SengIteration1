@@ -2,6 +2,7 @@ package com.autovend.software;
 import com.autovend.Barcode;
 import com.autovend.BarcodedUnit;
 import com.autovend.SellableUnit;
+import com.autovend.devices.BillSlot;
 import com.autovend.devices.ElectronicScale;
 import com.autovend.devices.OverloadException;
 import com.autovend.devices.SelfCheckoutStation;
@@ -21,7 +22,7 @@ public class addItem {
     private double expectedNewWeight=0;
     private int weightLimitinGrams;
     private  int sensitivity;
-
+    
 
 
     private SelfCheckoutStationController controller ;

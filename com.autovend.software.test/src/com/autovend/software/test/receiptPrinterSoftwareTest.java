@@ -40,7 +40,6 @@ public class receiptPrinterSoftwareTest {
         BigDecimal a =new BigDecimal(1);
         BigDecimal b =new BigDecimal(2);
         coindeno[0]=a;
-        coindeno[1]=b;
 
         SelfCheckoutStationController slf=new SelfCheckoutStationController(currency,deno,coindeno,3,3);
 

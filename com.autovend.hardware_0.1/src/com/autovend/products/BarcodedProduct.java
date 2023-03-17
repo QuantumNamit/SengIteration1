@@ -3,6 +3,7 @@ package com.autovend.products;
 import java.math.BigDecimal;
 
 import com.autovend.Barcode;
+import com.autovend.devices.BillSlot;
 import com.autovend.devices.SimulationException;
 
 /**
@@ -42,7 +43,7 @@ public class BarcodedProduct extends Product {
 		this.description = description;
 		this.expectedWeight = expectedWeight;
 	}
-
+	
 	/**
 	 * Get the barcode.
 	 * 

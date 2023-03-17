@@ -3,6 +3,7 @@ import com.autovend.Barcode;
 import com.autovend.BarcodedUnit;
 import com.autovend.SellableUnit;
 import com.autovend.devices.BarcodeScanner;
+import com.autovend.devices.BillSlot;
 import com.autovend.devices.ElectronicScale;
 import com.autovend.devices.SelfCheckoutStation;
 import com.autovend.devices.SimulationException;
@@ -59,7 +60,7 @@ public class addItemByScanning  extends addItem implements CustomerObserver {
 
            // unblock selfcheckout station
            unblock_selfcheckout(slf);
-
+          
        }
 
   }
