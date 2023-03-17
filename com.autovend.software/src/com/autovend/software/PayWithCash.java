@@ -24,6 +24,19 @@ import com.autovend.products.*;
 // Bill dispenser observer
 // Everything with bill
 
+/*
+Scenario:
+1. Cash I/O: Signals the insertion of coins and banknotes to the System.
+2. System: Reduces the remaining amount due by the value of the inserted cash.
+3. System: Signals to the Customer I/O the updated amount due after the insertion of each coin or
+banknote.
+4. Customer I/O: Updates the amount due displayed to the customer.
+5. System: If the remaining amount due is greater than 0, go to 1.
+6. System: If the remaining amount due is less than 0, signal to Cash I/O the amount of change due.
+7. Cash I/O: Dispense the change due to the customer.
+8. Once payment in full is made and change returned to the customer, see Print Receipt.
+*/
+
 
 public class PayWithCash implements CustomerObserver {
 		private Currency currency;
@@ -45,11 +58,12 @@ public class PayWithCash implements CustomerObserver {
 		private int scaleMaximumWeight;
 		private int scaleSensitivity;
 
+		
 public PayWithCash() {
 	//Dummy Object
 	Bill bill = new Bill(value, currency);
-	SelfCheckoutStation Object1 = new SelfCheckoutStation(currency, Denominations, coinDenominations, scaleMaximumWeight,scaleSensitivity);
-	
+	//SelfCheckoutStation O-bject1 = new SelfCheckoutStation(currency, Denominations, coinDenominations, scaleMaximumWeight,scaleSensitivity);
+	SystemController controller=new SystemController (currency, Denominations, coinDenominations, scaleMaximumWeight, scaleSensitivity);
 	/*
 	Map<Integer, BillDispenser> bill_dispenser = Object1.billDispensers;
 	BillSlot bill_input = Object1.billInput; 	// input channel
@@ -57,9 +71,19 @@ public PayWithCash() {
 	BillStorage bill_storage = Object1.billStorage;
 	BillValidator billValidator = Object1.billValidator;
 	*/
-	
-	
+		
 }
+
+public PayWithCash(int TotalAmount, int BillInserted) {
+	
+	Cash_Inserted= BillInserted;
+	Total_Amount=TotalAmount;
+	Amount_Due=Total_Amount;
+	Amount_Paid=0;
+	Change=0;
+	paidinFull=false;
+}
+
 public void initialization(Bill bill, BillValidator billValidator) {
 	Cash_Inserted= Getting_Bill_Value(bill, billValidator);
 	
@@ -80,7 +104,7 @@ public void Cash_Algorithm() {
 		
 		if (Amount_Due > 0) {
 			paidinFull =false;
-		// Notify customer about new amount due	
+			
 		}
 		else if (Amount_Due < 0) {
 		// Calculates the change	
@@ -137,15 +161,21 @@ public int Getting_Bill_Value(Bill bill, BillValidator billVAlidator) {
 	}
 	return x;
 }
-
 @Override
 public void notifyCustomer() {
+	System.out.println("Your new amount due is : %d CAD " );
 	// TODO Auto-generated method stub
 	
 }
 
 @Override
 public void notifyCustomerSessionComplete() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void notifyCustomer_Amount_Due() {
 	// TODO Auto-generated method stub
 	
 }

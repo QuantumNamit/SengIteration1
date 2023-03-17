@@ -63,7 +63,7 @@ public class receiptPrinterController implements ReceiptPrinterObserver {
         }
     }
 
-    public void abortPrinting(SelfCheckoutStationController slf){
+    public void abortPrinting(SystemController slf){
         // Suspend station
          slf.disable(slf);
     }

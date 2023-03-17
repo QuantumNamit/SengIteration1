@@ -13,7 +13,7 @@ public class receiptPrinterSoftware implements AttendantObserver,CustomerObserve
         private ArrayList<BarcodedProduct> items;
         private ReceiptPrinter printer;
 
-        private SelfCheckoutStationController slf;
+        private SystemController slf;
         private int paper_units;
         private int ink_units;
 
@@ -24,7 +24,7 @@ public class receiptPrinterSoftware implements AttendantObserver,CustomerObserve
 
 
         // print receipt
-        public void printReceipt(SelfCheckoutStationController slf,ReceiptPrinter printer,receiptPrinterController controller,AttendantObserver observer ,boolean paidInFull,int paperRemaining,int inkRemaining) throws OverloadException, EmptyException {
+        public void printReceipt(SystemController slf,ReceiptPrinter printer,receiptPrinterController controller,AttendantObserver observer ,boolean paidInFull,int paperRemaining,int inkRemaining) throws OverloadException, EmptyException {
             try {
 
                 if (paidInFull) {
@@ -84,6 +84,13 @@ public class receiptPrinterSoftware implements AttendantObserver,CustomerObserve
         }
 
     }
+
+
+	@Override
+	public void notifyCustomer_Amount_Due() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
 
