@@ -91,15 +91,18 @@ public PayWithCash(int TotalAmount, int BillInserted) {
 public int Getting_Bill_Value(Bill bill, BillValidator billValidator) {
 	int x=0;
 	if (billValidator.accept(bill)) {
-		x=bill.getValue();
+		x = bill.getValue();
+		return x;
 	}
-	return x;
+	else {
+		// If the customer inserts cash that is deemed unacceptable, this will be returned to the customer
+		bill_output.emit(bill);
+	}
 }
 
 public void initialization(Bill bill, BillValidator billValidator) {
 	Cash_Inserted= Getting_Bill_Value(bill, billValidator);
 	
-	//Total_Amount = ;
 	Amount_Due=Total_Amount;
 	Amount_Paid=0;
 	Change=0;
@@ -178,12 +181,12 @@ public void Change_Function() {
 			// Emit {num_of_bills} of 5
 			Change = Change - num_of_Bills*5;
 		}
-		// Exception 2 : Insufficient change
-		if (Change > 0) {
-			System.out.println("Station is Suspended. Please wait for assistance.");
-			
-		}
-		
+	}
+	// Exception 2 : Insufficient change
+	if (Change > 0) {
+		System.out.println("Station is Suspended. Please wait for assistance.");
+	} else {
+		bill_output.emit(Change);
 	}
 }
 
