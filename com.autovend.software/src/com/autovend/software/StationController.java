@@ -1,13 +1,22 @@
 package com.autovend.software;
+
+import com.autovend.Barcode;
+import com.autovend.BarcodedUnit;
+import com.autovend.SellableUnit;
+import com.autovend.devices.ElectronicScale;
+import com.autovend.devices.OverloadException;
 import com.autovend.devices.SelfCheckoutStation;
 import com.autovend.devices.SimulationException;
+import com.autovend.products.BarcodedProduct;
 
 import java.math.BigDecimal;
 import java.util.Currency;
 
-public class SelfCheckoutStationController extends SelfCheckoutStation {
+public class SystemController extends SelfCheckoutStation {
 
-    private SelfCheckoutStationController selfCheckoutStationController;
+    private SystemController selfCheckoutStationController;
+    private double expectedWeightUpdate=0;
+    private BarcodedUnit item;
 
 
     /**
@@ -23,14 +32,49 @@ public class SelfCheckoutStationController extends SelfCheckoutStation {
      * @throws SimulationException If any argument is null or negative.
      * @throws SimulationException If the number of bill or coin denominations is &lt;1.
      */
-    public SelfCheckoutStationController(Currency currency, int[] billDenominations, BigDecimal[] coinDenominations, int scaleMaximumWeight, int scaleSensitivity) {
+    public SystemController(Currency currency, int[] billDenominations, BigDecimal[] coinDenominations, int scaleMaximumWeight, int scaleSensitivity) {
         super(currency, billDenominations, coinDenominations, scaleMaximumWeight, scaleSensitivity);
 
 
     }
 
+    public double getWeight(SellableUnit item){
+        return item.getWeight();
+    }
+
+    public BigDecimal getPrice(BarcodedProduct product){
+        return product.getPrice();
+    }
+
+
+    // weight update function
+    public double expectedWeightUpdate(BarcodedProduct product) throws OverloadException {
+
+        expectedWeightUpdate= product.getExpectedWeight();
+
+        return expectedWeightUpdate;
+
+
+    }
+
+    public double bagging_area_weight_change(SystemController controller, Barcode barcode, double weightOfitem) throws OverloadException {
+
+        ElectronicScale baggingArea =controller.baggingArea;
+        // will notify the weight change event as well
+        item=new BarcodedUnit(barcode,weightOfitem);
+
+        if(item.getWeight()>baggingArea.getWeightLimit()){
+
+            throw new OverloadException();
+        }
+        else {
+            return item.getWeight();
+        }
+    }
+
+
     // Blocks the Self Checkout Station
-    public void disable(SelfCheckoutStationController selfCheckoutStationController){
+    public void disable(SystemController selfCheckoutStationController){
         selfCheckoutStationController.baggingArea.disable();
         selfCheckoutStationController.billStorage.disable();
         selfCheckoutStationController.scale.disable();
@@ -42,7 +86,7 @@ public class SelfCheckoutStationController extends SelfCheckoutStation {
 
     }
 
-    public void enable(SelfCheckoutStationController selfCheckoutStationController){
+    public void enable(SystemController selfCheckoutStationController){
         selfCheckoutStationController.baggingArea.enable();
         selfCheckoutStationController.billStorage.enable();
         selfCheckoutStationController.scale.enable();
@@ -55,3 +99,6 @@ public class SelfCheckoutStationController extends SelfCheckoutStation {
 
 }
 }
+
+
+
