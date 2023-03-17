@@ -88,7 +88,7 @@ public PayWithCash(int TotalAmount, int BillInserted) {
 // Scenario 1 Cash I/O: Signals the insertion of coins and banknotes to the System.
 public int Getting_Bill_Value(Bill bill, BillValidator billVAlidator) {
 	int x=0;
-	if (billVAlidator.accept(bill)) {
+	if (billValidator.accept(bill)) {
 		x=bill.getValue();
 	}
 	return x;
@@ -117,23 +117,23 @@ public void Cash_Algorithm(Bill bill) {
 		Amount_Paid+=Cash_Inserted;
 		Amount_Due = Total_Amount- Amount_Paid;
 		
-		if (Amount_Due > 0) {
-			paidinFull =false;
-			System.out.printf("Your new amount due is : %d CAD.", Amount_Due );
-			Cash_Inserted=bill.getValue();
-		
+			if (Amount_Due > 0) {
+				paidinFull =false;
+				System.out.printf("Your new amount due is : %d CAD.", Amount_Due );
+				Cash_Inserted=bill.getValue();
+			
+			}
+			else if (Amount_Due < 0) {
+			// Calculates the change	
+			Change = Amount_Due*-1;
+			System.out.printf("Your Change is: %d CAD.", Change );
+				paidinFull=true;
+				Cash_Inserted=bill.getValue();
+			}
+			else {
+				paidinFull=true;
+			}
 		}
-		else if (Amount_Due < 0) {
-		// Calculates the change	
-		Change = Amount_Due*-1;
-		System.out.printf("Your Change is: %d CAD.", Change );
-			paidinFull=true;
-			Cash_Inserted=bill.getValue();
-		}
-		else {
-			paidinFull=true;
-		}
-	}
 	}
 }
 
@@ -182,8 +182,6 @@ public void Change_Function() {
 public void PrintReceipt() {
 	receiptPrinterSoftware receipt = new receiptPrinterSoftware(items);
 }	
-
-
 
 @Override
 public void notifyCustomer() {
