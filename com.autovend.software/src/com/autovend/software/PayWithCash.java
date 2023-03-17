@@ -146,7 +146,6 @@ public void Change_Function() {
 	while (Change>5) {
 		if (Change>=100 ) {
 			num_of_Bills= Change / 100;
-			
 			Change = Change - num_of_Bills*100;
 	
 		if (Change >=50) {
