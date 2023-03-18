@@ -34,7 +34,7 @@ banknote.
 **/
 
 
-public class PayWithCash implements CustomerObserver {
+public class PayWithCash  {
 		private Currency currency;
 		private int value;
 		// Variable for cash inserted
@@ -86,7 +86,7 @@ public PayWithCash(int TotalAmount, int BillInserted) {
 }
 
 // Scenario 1 Cash I/O: Signals the insertion of  banknotes to the System.
-public int Getting_Bill_Value(Bill bill, BillValidator billValidator) {
+public int Getting_Bill_Value(Bill bill) {
 	int x = 0;
 	if (billValidator.accept(bill)) {
 		x = bill.getValue();
@@ -97,7 +97,7 @@ public int Getting_Bill_Value(Bill bill, BillValidator billValidator) {
 	}
 
 public void initialization(Bill bill, BillValidator billValidator, int totalAmount) {
-	Cash_Inserted=Getting_Bill_Value(bill, billValidator);
+	Cash_Inserted=Getting_Bill_Value(bill);
 	Total_Amount =totalAmount;
 	Amount_Due=Total_Amount;
 	Amount_Paid=0;
@@ -216,18 +216,6 @@ public void PrintReceipt() {
 }	
 
 
-@Override
-public void notifyCustomer() {
-	
-	// TODO Auto-generated method stub
-	
-}
-
-@Override
-public void notifyCustomerSessionComplete() {
-	// TODO Auto-generated method stub
-	
-}
 
 // For Testing Purposes
 /** Return Cash Inserted **/
