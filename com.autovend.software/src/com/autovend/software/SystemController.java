@@ -1,6 +1,7 @@
 package com.autovend.software;
 import com.autovend.Barcode;
 import com.autovend.BarcodedUnit;
+import com.autovend.Bill;
 import com.autovend.SellableUnit;
 import com.autovend.devices.*;
 import com.autovend.devices.observers.AbstractDeviceObserver;
@@ -8,6 +9,7 @@ import com.autovend.devices.observers.ReceiptPrinterObserver;
 import com.autovend.products.BarcodedProduct;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Currency;
 
 public class SystemController extends SelfCheckoutStation implements ReceiptPrinterObserver {
@@ -144,7 +146,120 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
         System.out.println("Session Complete ");
     }
 
-    // Blocks the Self Checkout Station
+
+
+
+
+  // Pay with cash Functions
+
+    public int getting_Bill_Value(BillValidator validator,Bill bill) {
+
+        int x=0;
+        if (validator.accept(bill)) {
+            x = bill.getValue();
+            return x;
+        }
+        return x;
+
+    }
+
+    public void notifyCustomer_due_balance(BigDecimal amount_due){
+        System.out.println("Your new amount due is : %d CAD." + amount_due);
+    }
+
+    public  void notifyCustomerChange(BigDecimal change){
+        System.out.println("Your Change is: %d CAD." + change);
+    }
+
+
+    // 7. Cash I/O: Dispense the change due to the customer.
+    public void giving_out_change(SystemController controller,BigDecimal change, ArrayList<Bill> bills) throws DisabledException, SimulationException, OverloadException {
+        // Number of Bills to output
+
+        BigDecimal num_of_Bills;
+        BillSlot bill_output = controller.billOutput;
+        BigDecimal remaining_change;
+
+        // Checks for number of 100$  bills needed for the change
+        if (change.compareTo(BigDecimal.valueOf(100)) >= 0) {
+
+            num_of_Bills = change.divide(BigDecimal.valueOf(100));
+            for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
+                bill_output.emit(bills.get(0));
+            }
+            remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(0).getValue())));
+        }
+        else{
+            remaining_change=change;
+        }
+        // Checks for number of 50$  bills needed for the change
+        if (remaining_change.compareTo(BigDecimal.valueOf(50)) >= 0) {
+            num_of_Bills = change.divide(BigDecimal.valueOf(50));
+            // Emit {num_of_bills} of 50
+            for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
+                bill_output.emit(bills.get(1));
+            }
+            remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(1).getValue())));
+        }
+        else{
+            remaining_change=change;
+        }
+        // Checks for number of 20$  bills needed for the change
+
+        if (remaining_change.compareTo(BigDecimal.valueOf(20)) >= 0) {
+            num_of_Bills = change.divide(BigDecimal.valueOf(20));
+            for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
+                bill_output.emit(bills.get(2));
+            }
+            remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(2).getValue())));
+        }
+
+        else{
+            remaining_change=change;
+        }
+
+        // Checks for number of 10$  bills needed for the change
+        if (remaining_change.compareTo(BigDecimal.valueOf(10)) >= 0) {
+            num_of_Bills = change.divide(BigDecimal.valueOf(10));
+            for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
+                bill_output.emit(bills.get(3));
+            }
+            remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(2).getValue())));
+        }
+        else{
+            remaining_change=change;
+        }
+        // Checks for number of 5$  bills needed for the change
+        if (remaining_change.compareTo(BigDecimal.valueOf(5)) >= 0) {
+            num_of_Bills = change.divide(BigDecimal.valueOf(5));
+
+            for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
+                bill_output.emit(bills.get(4));
+            }
+            remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(2).getValue())));
+        }
+        else{
+            remaining_change=change;
+
+        }
+
+
+        // Exception 2 : Insufficient change
+        if ((remaining_change.compareTo(BigDecimal.valueOf(0)) > 0) && (remaining_change.compareTo(BigDecimal.valueOf(5)) < 0)) {
+            controller.disable(controller);
+            controller.notifyAttendForAssistanceInChange();
+
+        }
+
+    }
+
+      public void notifyAttendForAssistanceInChange(){
+          System.out.println("Attendant should help the customer to get the appropriate change  ");
+
+        }
+
+
+        // Blocks the Self Checkout Station
     public void disable(SystemController selfCheckoutStationController){
         selfCheckoutStationController.baggingArea.disable();
         selfCheckoutStationController.billStorage.disable();
