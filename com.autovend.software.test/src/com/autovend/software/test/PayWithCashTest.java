@@ -45,7 +45,73 @@ public class PayWithCashTest {
         SystemController controller=new SystemController(currency,deno,coindeno,3,3);
         Bill bill = new Bill(5,currency);
         PayWithCash obj=new PayWithCash(currency);
-        BigDecimal cashInserted =BigDecimal.valueOf(50);
-        obj.Cash_Algorithm(controller,bp,bill,false,cashInserted);
+        int cashInserted = bill.getValue();
+        obj.Cash_Algorithm(controller,bp,bill,false,cashInserted, 50);
     }
+
+
+
+    @Test
+    public void cash_Algorithm2() throws OverloadException {
+
+    Barcode barcode = new Barcode(Numeral.five);
+    String description ="Item";
+    BigDecimal price = new BigDecimal(5);
+    double expected_weight=3;
+    BarcodedProduct bp = new BarcodedProduct(barcode,description,price,expected_weight);
+
+    ArrayList<BarcodedProduct> items=new ArrayList<BarcodedProduct>();
+    items.add(bp);
+
+
+    receiptPrinterSoftware rp =new receiptPrinterSoftware(items);
+
+
+    BarcodedUnit unit=new BarcodedUnit(barcode,1.2);
+    Currency currency = Currency.getInstance("USD");
+    int [] deno = {1,2};
+    BigDecimal[] coindeno=new BigDecimal[2];
+    BigDecimal a =new BigDecimal(1);
+    BigDecimal b =new BigDecimal(2);
+    coindeno[0]=a;
+    coindeno[1]=b;
+
+    SystemController controller=new SystemController(currency,deno,coindeno,3,3);
+    Bill bill = new Bill(50,currency);
+    PayWithCash obj=new PayWithCash(currency);
+    int cashInserted = bill.getValue();
+    obj.Cash_Algorithm(controller,bp,bill,false,cashInserted, 50);
+}
+    
+    @Test
+    public void cash_Algorithm3() throws OverloadException {
+
+    Barcode barcode = new Barcode(Numeral.five);
+    String description ="Item";
+    BigDecimal price = new BigDecimal(5);
+    double expected_weight=3;
+    BarcodedProduct bp = new BarcodedProduct(barcode,description,price,expected_weight);
+
+    ArrayList<BarcodedProduct> items=new ArrayList<BarcodedProduct>();
+    items.add(bp);
+
+
+    receiptPrinterSoftware rp =new receiptPrinterSoftware(items);
+
+
+    BarcodedUnit unit=new BarcodedUnit(barcode,1.2);
+    Currency currency = Currency.getInstance("USD");
+    int [] deno = {1,2};
+    BigDecimal[] coindeno=new BigDecimal[2];
+    BigDecimal a =new BigDecimal(1);
+    BigDecimal b =new BigDecimal(2);
+    coindeno[0]=a;
+    coindeno[1]=b;
+
+    SystemController controller=new SystemController(currency,deno,coindeno,3,3);
+    Bill bill = new Bill(100,currency);
+    PayWithCash obj=new PayWithCash(currency);
+    int cashInserted = bill.getValue();
+    obj.Cash_Algorithm(controller,bp,bill,false,cashInserted, 50);
+}
 }

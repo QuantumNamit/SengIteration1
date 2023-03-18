@@ -73,11 +73,11 @@ public class PayWithCash  {
      * @throws DisabledException
      **/
 
-    public void Cash_Algorithm(SystemController controller,BarcodedProduct product ,Bill bill,Boolean paidinFull,BigDecimal cash_Inserted) throws DisabledException, SimulationException, OverloadException {
+    public void Cash_Algorithm(SystemController controller,BarcodedProduct product ,Bill bill,Boolean paidinFull,int cash_Inserted, int Total_Amount) throws DisabledException, SimulationException, OverloadException {
 
-        BigDecimal amount_paid=BigDecimal.valueOf(0);
-        BigDecimal amount_due;
-        BigDecimal change;
+    	int amount_paid=0;
+        int amount_due;
+        int change;
         controller.enable(controller);
 
 
@@ -86,24 +86,24 @@ public class PayWithCash  {
         controller.getting_Bill_Value(billValidator,bill);
 
         while (!paidinFull) {
-            if (cash_Inserted.compareTo(BigDecimal.valueOf(0))>0) {
+            if (cash_Inserted >0) {
 
-                amount_paid = amount_paid.add(cash_Inserted);
-                amount_due= controller.getPrice(product).subtract(amount_paid);
+                amount_paid += cash_Inserted;
+                amount_due= Total_Amount - amount_paid;
 
                 // 5. System: If the remaining amount due is greater than 0, go to 1.
 
-                if (amount_due.compareTo(BigDecimal.valueOf(0)) >0) {
+                if (amount_due>0) {
                     paidinFull = false;
                     controller.notifyCustomer_due_balance(amount_due);
 
                 }
 
                 // 6. System: If the remaining amount due is less than 0, signal to Cash I/O the amount of change due.
-                else if (amount_due.compareTo(BigDecimal.valueOf(0)) < 0) {
+                else if (amount_due < 0) {
 
                     // Calculates the change
-                    change = amount_due.multiply(BigDecimal.valueOf(-1));
+                    change = amount_due*-1;
 
                     controller.notifyCustomerChange(change);
                     ArrayList<Bill> bills=new ArrayList<>();
@@ -111,21 +111,17 @@ public class PayWithCash  {
                     // 8. Once payment in full is made and change returned to the customer, see Print Receipt.
                     controller.giving_out_change(controller,change,allDenominationBills(bills));        // Calling to method for Change
                     paidinFull = true;
-                    PrintReceipt();
+                    controller.notifyPrint_Receipt();
 
                 }
                 else {
                     paidinFull = true;
                     // calls print receipt when paid in full is true
-                    PrintReceipt();
+                    controller.notifyPrint_Receipt();
                 }
             }
         }
     }
 
-    // Calls PRint Receipt
-    public void PrintReceipt() {
-        receiptPrinterSoftware receipt = new receiptPrinterSoftware(items);
-    }
-
+    
 }

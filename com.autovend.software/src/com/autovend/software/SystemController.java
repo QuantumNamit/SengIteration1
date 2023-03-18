@@ -121,19 +121,14 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
         printer.addPaper(quantity);
 
     }
-
+ // Inform attendant to print duplicate receipt and perform maintenance
     public void notifyAttendant_out_of_paper(ReceiptPrinter printer)  {
-
-        // Inform attendant to print duplicate receipt and perform maintenance
-        System.out.println("Receipt printer ran out of paper. Please print a duplicate receipt and perform maintenance on the station.");
+    	System.out.println("Receipt printer ran out of paper. Please print a duplicate receipt and perform maintenance on the station.");
 
     }
-
+    // Inform attendant to print duplicate receipt and perform maintenance
     public void notifyAttendant_out_of_ink(ReceiptPrinter printer)  {
-
-        // Inform attendant to print duplicate receipt and perform maintenance
-        System.out.println("Receipt printer ran out of ink. Please print a duplicate receipt and perform maintenance on the station.");
-
+    	System.out.println("Receipt printer ran out of ink. Please print a duplicate receipt and perform maintenance on the station.");
 
     }
 
@@ -163,99 +158,104 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
 
     }
 
-    public void notifyCustomer_due_balance(BigDecimal amount_due){
+    public void notifyCustomer_due_balance(int amount_due){
         System.out.println("Your new amount due is : %d CAD." + amount_due);
     }
 
-    public  void notifyCustomerChange(BigDecimal change){
+    public  void notifyCustomerChange(int change){
         System.out.println("Your Change is: %d CAD." + change);
     }
 
 
     // 7. Cash I/O: Dispense the change due to the customer.
-    public void giving_out_change(SystemController controller,BigDecimal change, ArrayList<Bill> bills) throws DisabledException, SimulationException, OverloadException {
+    public void giving_out_change(SystemController controller,int change, ArrayList<Bill> bills) throws DisabledException, SimulationException, OverloadException {
         // Number of Bills to output
 
-        BigDecimal num_of_Bills;
+        int num_of_Bills;
         BillSlot bill_output = controller.billOutput;
-        BigDecimal remaining_change;
+        /** Creating variables for remaining change for each instance  **/
+        int remaining_change_100;
+        int remaining_change_50;
+        int remaining_change_20;
+        int remaining_change_10;
+        int remaining_change_5;
 
         // Checks for number of 100$  bills needed for the change
-        if (change.compareTo(BigDecimal.valueOf(100)) >= 0) {
+        if (change >=100) {
 
-            num_of_Bills = change.divide(BigDecimal.valueOf(100));
-            for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
+            num_of_Bills = change / 100;
+            for (int i = 0; i<num_of_Bills; i++) {
                 bill_output.emit(bills.get(0));
                 //Customer Removes the Bill
                 bill_output.removeDanglingBill();
             }
-            remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(0).getValue())));
+            remaining_change_100 = change - num_of_Bills * 100;
         }
         else{
-            remaining_change=change;
+            remaining_change_100=change;
         }
         // Checks for number of 50$  bills needed for the change
-        if (remaining_change.compareTo(BigDecimal.valueOf(50)) >= 0) {
-            num_of_Bills = change.divide(BigDecimal.valueOf(50));
+        if (remaining_change_100 >=50) {
+            num_of_Bills = remaining_change_100 / 50;
             // Emit {num_of_bills} of 50
-            for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
+            for (int i = 0; i<num_of_Bills; i++) {
                 bill_output.emit(bills.get(1));
               //Customer Removes the Bill
                 bill_output.removeDanglingBill();
             }
-            remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(1).getValue())));
+            remaining_change_50 = remaining_change_100 - num_of_Bills * 50;
         }
         else{
-            remaining_change=change;
+            remaining_change_50 =remaining_change_100;;
         }
         // Checks for number of 20$  bills needed for the change
 
-        if (remaining_change.compareTo(BigDecimal.valueOf(20)) >= 0) {
-            num_of_Bills = change.divide(BigDecimal.valueOf(20));
-            for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
+        if (remaining_change_50 >=20) {
+            num_of_Bills =  remaining_change_50/20;
+            for (int i = 0; i<num_of_Bills; i++) {
                 bill_output.emit(bills.get(2));
                 //Customer Removes the Bill
                 bill_output.removeDanglingBill();
             }
-            remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(2).getValue())));
+            remaining_change_20 = remaining_change_50 - num_of_Bills * 20;
         }
 
         else{
-            remaining_change=change;
+            remaining_change_20=remaining_change_50;
         }
 
         // Checks for number of 10$  bills needed for the change
-        if (remaining_change.compareTo(BigDecimal.valueOf(10)) >= 0) {
-            num_of_Bills = change.divide(BigDecimal.valueOf(10));
-            for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
+        if (remaining_change_20 >=10) {
+            num_of_Bills = remaining_change_20/10;
+            for (int i = 0;i<num_of_Bills; i++) {
                 bill_output.emit(bills.get(3));
                 //Customer Removes the Bill
                 bill_output.removeDanglingBill();
             }
-            remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(2).getValue())));
+            remaining_change_10 = remaining_change_20 - num_of_Bills * 10;
         }
         else{
-            remaining_change=change;
+            remaining_change_10=remaining_change_20;
         }
         // Checks for number of 5$  bills needed for the change
-        if (remaining_change.compareTo(BigDecimal.valueOf(5)) >= 0) {
-            num_of_Bills = change.divide(BigDecimal.valueOf(5));
-
-            for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
+        if (remaining_change_10 >=5) {
+            num_of_Bills = remaining_change_10/5;
+            
+            for (int i = 0; i<num_of_Bills; i++) {
                 bill_output.emit(bills.get(4));
               //Customer Removes the Bill
                 bill_output.removeDanglingBill();
             }
-            remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(2).getValue())));
+            remaining_change_5 = remaining_change_10 - num_of_Bills * 5;
         }
         else{
-            remaining_change=change;
+            remaining_change_5=remaining_change_10;
 
         }
 
 
         // Exception 2 : Insufficient change
-        if ((remaining_change.compareTo(BigDecimal.valueOf(0)) > 0) && (remaining_change.compareTo(BigDecimal.valueOf(5)) < 0)) {
+        if ((remaining_change_5 >0) && (remaining_change_5 <5 ) ) {
             controller.disable(controller);
             controller.notifyAttendForAssistanceInChange();
 
@@ -267,6 +267,9 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
           System.out.println("Attendant should help the customer to get the appropriate change  ");
 
         }
+      public void notifyPrint_Receipt(){
+          System.out.println("Print the Receipt..");
+          }
 
 
         // Blocks the Self Checkout Station
