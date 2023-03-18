@@ -82,7 +82,6 @@ public class PayWithCashTest {
 		int Change_Due= Test2.getChange();
 		assertEquals(26, Change_Due);
 		
-		
 	}
 	
 	}
