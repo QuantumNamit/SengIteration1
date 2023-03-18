@@ -93,10 +93,9 @@ public int Getting_Bill_Value(Bill bill) {
 		return x;
 	}
 	return x;
-
 	}
 
-public void initialization(Bill bill, BillValidator billValidator, int totalAmount) {
+public void initialization(Bill bill, int totalAmount) {
 	Cash_Inserted=Getting_Bill_Value(bill);
 	Total_Amount =totalAmount;
 	Amount_Due=Total_Amount;
