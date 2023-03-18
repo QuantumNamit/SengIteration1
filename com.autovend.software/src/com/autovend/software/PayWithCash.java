@@ -31,36 +31,44 @@ import com.autovend.products.*;
  8. Once payment in full is made and change returned to the customer, see Print Receipt.
  **/
 
+/** Handles the Payment System that involves cash
+ *  Contains The Cash Algorithm After Cash Insertion
+ *  The SystemController class has the method to handle change
+ **/
+
 
 public class PayWithCash  {
 
-    private Currency currency;
-    private ArrayList<BarcodedProduct> items;
-    public int change;
-    public int amount_due;
-    private boolean AttendantHelp;
+    private Currency currency;						// Currency variable
+    private ArrayList<BarcodedProduct> items;		// Array list for items
+    public int change;								// Variable for Change
+    public int amount_due;							// Represents the amount due
+    
 
-
+    // Currency Initiator
     public PayWithCash(Currency currency) {
        this.currency=currency;
 
     }
-
+    // Array list for Bills
     public  ArrayList<Bill>  allDenominationBills(ArrayList<Bill> bills){
-
+    	// 100$ Bill Object
         Bill bill_100 = new Bill (100, currency.getInstance("CAD"));
         bills.add(0,bill_100);
 
-
+        // 50$ Bill Object
         Bill bill_50 = new Bill (50, currency.getInstance("CAD"));
         bills.add(1,bill_50);
 
+        // 20$ Bill Object
         Bill bill_20 = new Bill (20, currency.getInstance("CAD"));
         bills.add(2,bill_20);
-
+        
+        // 10$ Bill Object
         Bill bill_10 = new Bill (10, currency.getInstance("CAD"));
         bills.add(3,bill_10);
 
+        // 5$ Bill Object
         Bill bill_5 = new Bill (5, currency.getInstance("CAD"));
         bills.add(4,bill_5);
 
@@ -127,10 +135,11 @@ public class PayWithCash  {
         }
     }
 
-    // Returns the Value of Change
+    // Encapsulation for Change
 	public int getChange() {
 		return change;
 	}
+	// Encapsulation for Amount Due
 	public int getAmount_Due() {
 		return amount_due;
 	}
