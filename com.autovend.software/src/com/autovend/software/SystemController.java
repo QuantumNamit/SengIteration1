@@ -1,22 +1,22 @@
 package com.autovend.software;
-
 import com.autovend.Barcode;
 import com.autovend.BarcodedUnit;
 import com.autovend.SellableUnit;
-import com.autovend.devices.ElectronicScale;
-import com.autovend.devices.OverloadException;
-import com.autovend.devices.SelfCheckoutStation;
-import com.autovend.devices.SimulationException;
+import com.autovend.devices.*;
+import com.autovend.devices.observers.AbstractDeviceObserver;
+import com.autovend.devices.observers.ReceiptPrinterObserver;
 import com.autovend.products.BarcodedProduct;
 
 import java.math.BigDecimal;
 import java.util.Currency;
 
-public class SystemController extends SelfCheckoutStation {
+public class SystemController extends SelfCheckoutStation implements ReceiptPrinterObserver {
 
-    private SystemController selfCheckoutStationController;
+    private SystemController controller;
     private double expectedWeightUpdate=0;
     private BarcodedUnit item;
+    private  int paper_units;
+    private int ink_units;
 
 
     /**
@@ -37,6 +37,8 @@ public class SystemController extends SelfCheckoutStation {
 
 
     }
+
+    // Functions used inside the addItemByScanning
 
     public double getWeight(SellableUnit item){
         return item.getWeight();
@@ -73,6 +75,75 @@ public class SystemController extends SelfCheckoutStation {
     }
 
 
+    public void notifyCustomer_to_put_item_in_BaggingArea() {
+        System.out.println("Enter the item to the Bagging Area ");
+    }
+
+    // Functions Used Inside receiptPrinterClass
+
+    public boolean outOfInk(ReceiptPrinter printer,int ink_remaining){
+
+        if(ink_remaining==0){
+            reactToOutOfInkEvent(printer);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean outOfPaper(ReceiptPrinter printer,int paper_remaining){
+
+        if(paper_remaining==0){
+            reactToOutOfPaperEvent(printer);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public void abortPrinting(SystemController slf){
+        // Suspend station
+        slf.disable(slf);
+    }
+
+    public void addInk(SystemController controller,int quantity) throws OverloadException {
+        ReceiptPrinter printer=controller.printer;
+        printer.addInk(quantity);
+
+    }
+
+    public void addPaper(SystemController controller,int quantity) throws OverloadException {
+        ReceiptPrinter printer=controller.printer;
+        printer.addPaper(quantity);
+
+    }
+
+    public void notifyAttendant_out_of_paper(ReceiptPrinter printer)  {
+
+        // Inform attendant to print duplicate receipt and perform maintenance
+        System.out.println("Receipt printer ran out of paper. Please print a duplicate receipt and perform maintenance on the station.");
+
+    }
+
+    public void notifyAttendant_out_of_ink(ReceiptPrinter printer)  {
+
+        // Inform attendant to print duplicate receipt and perform maintenance
+        System.out.println("Receipt printer ran out of ink. Please print a duplicate receipt and perform maintenance on the station.");
+
+
+    }
+
+
+    public void notifyCustomer_thanking() {
+        System.out.println("Thankyou For Shopping with Us");
+    }
+
+    public void notifyCustomerSessionComplete(){
+        System.out.println("Session Complete ");
+    }
+
     // Blocks the Self Checkout Station
     public void disable(SystemController selfCheckoutStationController){
         selfCheckoutStationController.baggingArea.disable();
@@ -98,7 +169,35 @@ public class SystemController extends SelfCheckoutStation {
 
 
 }
+
+    @Override
+    public void reactToEnabledEvent(AbstractDevice<? extends AbstractDeviceObserver> device) {
+
+    }
+
+    @Override
+    public void reactToDisabledEvent(AbstractDevice<? extends AbstractDeviceObserver> device) {
+
+    }
+
+    @Override
+    public void reactToOutOfPaperEvent(ReceiptPrinter printer) {
+        notifyAttendant_out_of_paper(printer);
+    }
+
+    @Override
+    public void reactToOutOfInkEvent(ReceiptPrinter printer) {
+        notifyAttendant_out_of_ink(printer);
+
+    }
+
+    @Override
+    public void reactToPaperAddedEvent(ReceiptPrinter printer) {
+
+    }
+
+    @Override
+    public void reactToInkAddedEvent(ReceiptPrinter printer) {
+
+    }
 }
-
-
-
