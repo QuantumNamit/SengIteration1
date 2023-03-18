@@ -89,7 +89,7 @@ public PayWithCash(int TotalAmount, int BillInserted) {
 
 // Scenario 1 Cash I/O: Signals the insertion of coins and banknotes to the System.
 public int Getting_Bill_Value(Bill bill, BillValidator billValidator) {
-	int x=0;
+	int x = 0;
 	if (billValidator.accept(bill)) {
 		x = bill.getValue();
 		return x;
@@ -207,13 +207,11 @@ public void notifyCustomerSessionComplete() {
 	
 }
 
-/**
+
 @Override
 public void notifyCustomer_Amount_Due() {
 	// TODO Auto-generated method stub
 	
 }
-**/
-
 
 }
