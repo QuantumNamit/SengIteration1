@@ -186,6 +186,8 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
             num_of_Bills = change.divide(BigDecimal.valueOf(100));
             for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
                 bill_output.emit(bills.get(0));
+                //Customer Removes the Bill
+                bill_output.removeDanglingBill();
             }
             remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(0).getValue())));
         }
@@ -198,6 +200,8 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
             // Emit {num_of_bills} of 50
             for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
                 bill_output.emit(bills.get(1));
+              //Customer Removes the Bill
+                bill_output.removeDanglingBill();
             }
             remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(1).getValue())));
         }
@@ -210,6 +214,8 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
             num_of_Bills = change.divide(BigDecimal.valueOf(20));
             for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
                 bill_output.emit(bills.get(2));
+                //Customer Removes the Bill
+                bill_output.removeDanglingBill();
             }
             remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(2).getValue())));
         }
@@ -223,6 +229,8 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
             num_of_Bills = change.divide(BigDecimal.valueOf(10));
             for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
                 bill_output.emit(bills.get(3));
+                //Customer Removes the Bill
+                bill_output.removeDanglingBill();
             }
             remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(2).getValue())));
         }
@@ -235,6 +243,8 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
 
             for (int i = 0; num_of_Bills.compareTo(BigDecimal.valueOf(i)) > 0; i++) {
                 bill_output.emit(bills.get(4));
+              //Customer Removes the Bill
+                bill_output.removeDanglingBill();
             }
             remaining_change = change.subtract(num_of_Bills.multiply(BigDecimal.valueOf(bills.get(2).getValue())));
         }
