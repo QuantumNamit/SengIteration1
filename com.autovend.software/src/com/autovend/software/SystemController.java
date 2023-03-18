@@ -19,6 +19,7 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
     private BarcodedUnit item;
     private  int paper_units;
     private int ink_units;
+    
 
 
     /**
@@ -159,11 +160,11 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
     }
 
     public void notifyCustomer_due_balance(int amount_due){
-        System.out.println("Your new amount due is : %d CAD." + amount_due);
+        System.out.println("Your new amount due is CAD " + amount_due);
     }
 
     public  void notifyCustomerChange(int change){
-        System.out.println("Your Change is: %d CAD." + change);
+        System.out.println("Your Change is CAD " + change);
     }
 
 
@@ -264,7 +265,8 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
     }
 
       public void notifyAttendForAssistanceInChange(){
-          System.out.println("Attendant should help the customer to get the appropriate change  ");
+          System.out.println("Attendant should help the customer to get the appropriate change");
+         
 
         }
       public void notifyPrint_Receipt(){
@@ -328,4 +330,6 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
     public void reactToInkAddedEvent(ReceiptPrinter printer) {
 
     }
+
+	
 }

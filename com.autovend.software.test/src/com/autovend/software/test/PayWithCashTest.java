@@ -7,6 +7,8 @@ import com.autovend.Bill;
 import com.autovend.Numeral;
 import com.autovend.devices.OverloadException;
 import com.autovend.products.BarcodedProduct;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -17,8 +19,12 @@ import static org.junit.Assert.*;
 
 public class PayWithCashTest {
 
+	/** Total bill > Cash Inserted
+	 *  Amount Inserted --> 5 , Total Bill ---->50
+	 * 
+     * Testing if the The correct amount Due of 45 is displayed     **/
     @Test
-    public void cash_Algorithm() throws OverloadException {
+    public void Total_Bill_greater_than_Cash_Insetred() throws OverloadException {
 
         Barcode barcode = new Barcode(Numeral.five);
         String description ="Item";
@@ -47,12 +53,15 @@ public class PayWithCashTest {
         PayWithCash obj=new PayWithCash(currency);
         int cashInserted = bill.getValue();
         obj.Cash_Algorithm(controller,bp,bill,false,cashInserted, 50);
+        assertEquals(45, obj.getAmount_Due());;
     }
 
 
-
+    /** Total bill = Cash Inserted 
+     * Amount Inserted --> 50 , Total Bill ---->50
+     * Testing if the The correct Change of 0 is displayed     **/
     @Test
-    public void cash_Algorithm2() throws OverloadException {
+    public void Total_Bill_Equals_Cash_Insetred() throws OverloadException {
 
     Barcode barcode = new Barcode(Numeral.five);
     String description ="Item";
@@ -81,10 +90,16 @@ public class PayWithCashTest {
     PayWithCash obj=new PayWithCash(currency);
     int cashInserted = bill.getValue();
     obj.Cash_Algorithm(controller,bp,bill,false,cashInserted, 50);
+    assertEquals(0, obj.getChange());;
 }
     
+    
+ /**Total bill < Cash Inserted 
+  * Amount Inserted --> 100 , Total Bill ---->50
+  * Testing if the The correct Change of 50 is displayed     **/
+    
     @Test
-    public void cash_Algorithm3() throws OverloadException {
+    public void Total_Bill_less_than_Cash_Insetred() throws OverloadException {
 
     Barcode barcode = new Barcode(Numeral.five);
     String description ="Item";
@@ -113,5 +128,83 @@ public class PayWithCashTest {
     PayWithCash obj=new PayWithCash(currency);
     int cashInserted = bill.getValue();
     obj.Cash_Algorithm(controller,bp,bill,false,cashInserted, 50);
+    assertEquals(50, obj.getChange());
 }
+    
+    /** Testing for Insufficient Change and Attendant is called 
+     * Total bill < Cash Inserted 
+     * Amount Inserted --> 100 , Total Bill ---->57
+     *    **/
+       
+       @Test
+       public void Insufficient_Change() throws OverloadException {
+
+       Barcode barcode = new Barcode(Numeral.five);
+       String description ="Item";
+       BigDecimal price = new BigDecimal(5);
+       double expected_weight=3;
+       BarcodedProduct bp = new BarcodedProduct(barcode,description,price,expected_weight);
+
+       ArrayList<BarcodedProduct> items=new ArrayList<BarcodedProduct>();
+       items.add(bp);
+
+
+       receiptPrinterSoftware rp =new receiptPrinterSoftware(items);
+
+
+       BarcodedUnit unit=new BarcodedUnit(barcode,1.2);
+       Currency currency = Currency.getInstance("USD");
+       int [] deno = {1,2};
+       BigDecimal[] coindeno=new BigDecimal[2];
+       BigDecimal a =new BigDecimal(1);
+       BigDecimal b =new BigDecimal(2);
+       coindeno[0]=a;
+       coindeno[1]=b;
+
+       SystemController controller=new SystemController(currency,deno,coindeno,3,3);
+       Bill bill = new Bill(100,currency);
+       PayWithCash obj=new PayWithCash(currency);
+       int cashInserted = bill.getValue();
+       obj.Cash_Algorithm(controller,bp,bill,false,cashInserted, 57);
+       Assert.assertTrue("Attendant should help the customer to get the appropriate change", true);
+   
+   } 
+       /** Testing for Print Receipts 
+        * Total bill < Cash Inserted 
+        * Amount Inserted --> 100 , Total Bill ---->50
+        *    **/
+          
+          @Test
+          public void ReceiptPrinted() throws OverloadException {
+
+          Barcode barcode = new Barcode(Numeral.five);
+          String description ="Item";
+          BigDecimal price = new BigDecimal(5);
+          double expected_weight=3;
+          BarcodedProduct bp = new BarcodedProduct(barcode,description,price,expected_weight);
+
+          ArrayList<BarcodedProduct> items=new ArrayList<BarcodedProduct>();
+          items.add(bp);
+
+
+          receiptPrinterSoftware rp =new receiptPrinterSoftware(items);
+
+
+          BarcodedUnit unit=new BarcodedUnit(barcode,1.2);
+          Currency currency = Currency.getInstance("USD");
+          int [] deno = {1,2};
+          BigDecimal[] coindeno=new BigDecimal[2];
+          BigDecimal a =new BigDecimal(1);
+          BigDecimal b =new BigDecimal(2);
+          coindeno[0]=a;
+          coindeno[1]=b;
+
+          SystemController controller=new SystemController(currency,deno,coindeno,3,3);
+          Bill bill = new Bill(100,currency);
+          PayWithCash obj=new PayWithCash(currency);
+          int cashInserted = bill.getValue();
+          obj.Cash_Algorithm(controller,bp,bill,false,cashInserted, 50);
+          Assert.assertTrue("Print the Receipt..", true);
+      
+      } 
 }

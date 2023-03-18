@@ -36,6 +36,9 @@ public class PayWithCash  {
 
     private Currency currency;
     private ArrayList<BarcodedProduct> items;
+    public int change;
+    public int amount_due;
+    private boolean AttendantHelp;
 
 
     public PayWithCash(Currency currency) {
@@ -76,8 +79,8 @@ public class PayWithCash  {
     public void Cash_Algorithm(SystemController controller,BarcodedProduct product ,Bill bill,Boolean paidinFull,int cash_Inserted, int Total_Amount) throws DisabledException, SimulationException, OverloadException {
 
     	int amount_paid=0;
-        int amount_due;
-        int change;
+        
+        
         controller.enable(controller);
 
 
@@ -96,6 +99,7 @@ public class PayWithCash  {
                 if (amount_due>0) {
                     paidinFull = false;
                     controller.notifyCustomer_due_balance(amount_due);
+                    break;
 
                 }
 
@@ -105,11 +109,11 @@ public class PayWithCash  {
                     // Calculates the change
                     change = amount_due*-1;
 
-                    controller.notifyCustomerChange(change);
+                    controller.notifyCustomerChange(getChange());
                     ArrayList<Bill> bills=new ArrayList<>();
 
                     // 8. Once payment in full is made and change returned to the customer, see Print Receipt.
-                    controller.giving_out_change(controller,change,allDenominationBills(bills));        // Calling to method for Change
+                    controller.giving_out_change(controller,getChange(),allDenominationBills(bills));        // Calling to method for Change
                     paidinFull = true;
                     controller.notifyPrint_Receipt();
 
@@ -123,5 +127,13 @@ public class PayWithCash  {
         }
     }
 
-    
+    // Returns the Value of Change
+	public int getChange() {
+		return change;
+	}
+	public int getAmount_Due() {
+		return amount_due;
+	}
+
+
 }
