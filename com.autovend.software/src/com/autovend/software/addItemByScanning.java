@@ -22,7 +22,7 @@ import java.math.BigDecimal;
  */
 
 
-public class addItemByScanning  implements CustomerObserver {
+public class addItemByScanning  {
 
     private Barcode barcode;
     private String description;
@@ -85,7 +85,7 @@ public class addItemByScanning  implements CustomerObserver {
 
              // notifying the customer to place the item in the bagging Area (Scenario 5 covered)
 
-                notifyCustomer();
+                controller.notifyCustomer_to_put_item_in_BaggingArea();;
 
              // updates the expected weight from the bagging area (covered Scenario 4)
 
@@ -109,22 +109,5 @@ public class addItemByScanning  implements CustomerObserver {
            }
            }
 
-    /**
-     * Method to notify the customer to place there item to the bagging area
-     */
 
-    @Override
-    public void notifyCustomer() {
-        System.out.println("Enter the item to the Bagging Area ");
-    }
-
-
-    @Override
-    public void notifyCustomerSessionComplete() {
-
-
-    }
-
-	
 }
-
