@@ -64,11 +64,27 @@ public class PayWithCashTest {
         assertEquals(20, value);
 
 	}
+	
 	@Test
 	public void Check_CashAlgorithm_AmountLess_thanTotal() {
-		PayWithCash Test2= new PayWithCash();
+		int Cash_inserted= 20;
+		int Total_Bill=55;
+		PayWithCash Test2= new PayWithCash(Cash_inserted, Total_Bill);
+		int Amount_Due= Test2.getAmount_Due();
+		assertEquals(35, Amount_Due);
+	
+	}
+	@Test 
+	public void Check_CashAlgorithm_AmountGreater_thanTotal() {
+		int Cash_inserted= 50;
+		int Total_Bill=24;
+		PayWithCash Test2= new PayWithCash(Cash_inserted, Total_Bill);
+		int Change_Due= Test2.getChange();
+		assertEquals(26, Change_Due);
+		
 		
 	}
+	
 	}
 
 

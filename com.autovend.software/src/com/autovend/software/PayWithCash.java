@@ -55,6 +55,8 @@ public class PayWithCash  {
 		private int scaleSensitivity;
 		private ArrayList<BarcodedProduct> items;
 		
+		private int Remaining_Change;
+		
 		// Bill 
 		Bill bill = new Bill(value, currency);
 		Bill bill_100 = new Bill (100, currency.getInstance("CAD"));
@@ -153,55 +155,54 @@ public void Change_Function() throws DisabledException, SimulationException, Ove
 	// Number of Bills to output
 	int num_of_Bills;
 
-	while (getChange()>5) {
-		// Checks for number of 100$  bills needed for the change
-		if (getChange()>=100 ) {
-			num_of_Bills= getChange() / 100;
-			for (int i=0; i<num_of_Bills; i++)
-			{
-				bill_output.emit(bill_100);
-			}
-			Change = getChange() - num_of_Bills*100;
+	// Checks for number of 100$  bills needed for the change
+	if (getChange()>=100 ) {
+		num_of_Bills= getChange() / 100;
+		for (int i=0; i<num_of_Bills; i++)
+		{
+			bill_output.emit(bill_100);
 		}
-		// Checks for number of 50$  bills needed for the change
-		if (getChange() >=50) {
-			num_of_Bills= getChange() / 50;
-			// Emit {num_of_bills} of 50
-			for (int i=0; i<num_of_Bills; i++)
-			{
-				bill_output.emit(bill_50);
-			}
-			Change = getChange() - num_of_Bills*50;
+		Remaining_Change= getChange() - num_of_Bills*100;
+	}
+	// Checks for number of 50$  bills needed for the change
+	if (Remaining_Change >=50) {
+		num_of_Bills= getChange() / 50;
+		// Emit {num_of_bills} of 50
+		for (int i=0; i<num_of_Bills; i++)
+		{
+		bill_output.emit(bill_50);
 		}
-		// Checks for number of 20$  bills needed for the change
-		if (getChange() >=20) {
-			num_of_Bills= getChange() / 20;
-			for (int i=0; i<num_of_Bills; i++)
-			{
-				bill_output.emit(bill_20);
-			}
-			Change = getChange() - num_of_Bills*20;
+		Remaining_Change = getChange() - num_of_Bills*50;
+		}
+	// Checks for number of 20$  bills needed for the change
+	if (Remaining_Change >=20) {
+		num_of_Bills= getChange() / 20;
+		for (int i=0; i<num_of_Bills; i++)
+		{
+			bill_output.emit(bill_20);
+		}
+		Remaining_Change = getChange() - num_of_Bills*20;
 		}
 		// Checks for number of 10$  bills needed for the change
-		if (getChange() >=10) {
-			num_of_Bills= getChange() / 10;
-			for (int i=0; i<num_of_Bills; i++)
-			{
-				bill_output.emit(bill_10);
-			}
-			Change = getChange() - num_of_Bills*10;
+	if (Remaining_Change >=10) {
+		num_of_Bills= getChange() / 10;
+		for (int i=0; i<num_of_Bills; i++)
+		{
+		bill_output.emit(bill_10);
+		}
+		Remaining_Change = getChange() - num_of_Bills*10;
 		}
 		// Checks for number of 5$  bills needed for the change
-		if (getChange() >=5) {
-			num_of_Bills= getChange() / 5;
-			for (int i=0; i<num_of_Bills; i++)
-			{
-				bill_output.emit(bill_5);
-			}
-			Change = getChange() - num_of_Bills*5;
+	if (Remaining_Change >=5) {
+		num_of_Bills= getChange() / 5;
+		for (int i=0; i<num_of_Bills; i++)
+		{
+		bill_output.emit(bill_5);
+		}
+		Remaining_Change = getChange() - num_of_Bills*5;
 		}
 		
-	}
+	
 	// Exception 2 : Insufficient change
 	if ((Change > 0) && (Change<5 )  ) {
 		System.out.println("Station is Suspended. Please wait for assistance.");
