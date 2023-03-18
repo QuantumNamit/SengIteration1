@@ -94,11 +94,10 @@ public int Getting_Bill_Value(Bill bill, BillValidator billValidator) {
 		x = bill.getValue();
 		return x;
 	}
-	else {
-		// If the customer inserts cash that is deemed unacceptable, this will be returned to the customer
-		bill_output.emit(bill);
+	return x;
+
 	}
-}
+
 
 public void initialization(Bill bill, BillValidator billValidator) {
 	Cash_Inserted= Getting_Bill_Value(bill, billValidator);
@@ -185,9 +184,7 @@ public void Change_Function() {
 	// Exception 2 : Insufficient change
 	if (Change > 0) {
 		System.out.println("Station is Suspended. Please wait for assistance.");
-	} else {
-		bill_output.emit(Change);
-	}
+	} 
 }
 
 public void PrintReceipt() {
@@ -207,11 +204,5 @@ public void notifyCustomerSessionComplete() {
 	
 }
 
-
-@Override
-public void notifyCustomer_Amount_Due() {
-	// TODO Auto-generated method stub
-	
-}
 
 }

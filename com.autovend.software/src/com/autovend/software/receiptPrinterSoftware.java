@@ -86,11 +86,7 @@ public class receiptPrinterSoftware implements AttendantObserver,CustomerObserve
     }
 
 
-	@Override
-	public void notifyCustomer_Amount_Due() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }
 

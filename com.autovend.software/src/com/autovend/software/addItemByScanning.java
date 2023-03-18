@@ -125,10 +125,6 @@ public class addItemByScanning  implements CustomerObserver {
 
     }
 
-	@Override
-	public void notifyCustomer_Amount_Due() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
 
