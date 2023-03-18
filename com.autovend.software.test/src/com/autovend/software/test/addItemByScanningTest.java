@@ -1,13 +1,11 @@
 package com.autovend.software.test;
+import com.autovend.software.*;
 import com.autovend.Barcode;
 import com.autovend.BarcodedUnit;
 import com.autovend.Numeral;
 import com.autovend.devices.OverloadException;
 import com.autovend.devices.SimulationException;
 import com.autovend.products.BarcodedProduct;
-import com.autovend.software.SystemController;
-import com.autovend.software.addItemByScanning;
-
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -144,6 +142,3 @@ public class addItemByScanningTest {
     }
 
 }
-     
-    
-     
