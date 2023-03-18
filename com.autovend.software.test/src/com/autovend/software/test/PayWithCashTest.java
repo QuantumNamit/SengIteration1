@@ -55,7 +55,7 @@ public class PayWithCashTest {
 	BillValidator billValidator = controller.billValidator;
 
 
-	/* Tests for if bill value is inserted properly */
+	/** Tests for if bill value is inserted properly **/
 	@Test
 	public void Check_CashInserted() {
 		PayWithCash Test1= new PayWithCash();
@@ -64,7 +64,7 @@ public class PayWithCashTest {
         assertEquals(20, value);
 
 	}
-	
+	/** Tests if the Amount is less than total **/
 	@Test
 	public void Check_CashAlgorithm_AmountLess_thanTotal() {
 		int Cash_inserted= 20;
@@ -74,6 +74,7 @@ public class PayWithCashTest {
 		assertEquals(35, Amount_Due);
 	
 	}
+	/** Tests if the Amount is greater than total **/
 	@Test 
 	public void Check_CashAlgorithm_AmountGreater_thanTotal() {
 		int Cash_inserted= 50;
