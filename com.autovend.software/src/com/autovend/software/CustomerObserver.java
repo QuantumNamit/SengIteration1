@@ -6,7 +6,6 @@ public interface CustomerObserver {
 
      public void notifyCustomerSessionComplete();
 
-	public void notifyCustomer_Amount_Due();
-
+	
 }
 
