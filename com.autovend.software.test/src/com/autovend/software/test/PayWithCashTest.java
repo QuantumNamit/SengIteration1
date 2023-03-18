@@ -29,7 +29,7 @@ public class PayWithCashTest {
 	 * 
      * Testing if the The correct amount Due of 45 is displayed     **/
     @Test
-    public void Total_Bill_greater_than_Cash_Insetred() throws OverloadException {
+    public void Total_Bill_greater_than_Cash_Insetred_Checks_AmountDue() throws OverloadException {
 
         Barcode barcode = new Barcode(Numeral.five);
         String description ="Item";
@@ -66,7 +66,7 @@ public class PayWithCashTest {
      * Amount Inserted --> 50 , Total Bill ---->50
      * Testing if the The correct Change of 0 is displayed     **/
     @Test
-    public void Total_Bill_Equals_Cash_Insetred() throws OverloadException {
+    public void Total_Bill_Equals_Cash_Insetred_Checks_Change_0() throws OverloadException {
 
     Barcode barcode = new Barcode(Numeral.five);
     String description ="Item";
@@ -104,7 +104,7 @@ public class PayWithCashTest {
   * Testing if the The correct Change of 50 is displayed     **/
     
     @Test
-    public void Total_Bill_less_than_Cash_Insetred() throws OverloadException {
+    public void Total_Bill_less_than_Cash_Insetred_Checks_Change_NotZero() throws OverloadException {
 
     Barcode barcode = new Barcode(Numeral.five);
     String description ="Item";
@@ -142,7 +142,7 @@ public class PayWithCashTest {
      *    **/
        
        @Test
-       public void Insufficient_Change() throws OverloadException {
+       public void Insufficient_Change_Calls_Attendant() throws OverloadException {
 
        Barcode barcode = new Barcode(Numeral.five);
        String description ="Item";
