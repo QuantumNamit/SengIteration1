@@ -2,14 +2,18 @@
 // Abrar Zawad Safwan -30150892
 // Faiyaz Altaf Pranto - 30162576
 // Namit Aneja -30146188
+// Victor Campos
+// Bheesha Kumari
+
 
 package com.autovend.software.test;
 import com.autovend.software.*;
-
+import com.autovend.devices.*;
 import com.autovend.Barcode;
 import com.autovend.BarcodedUnit;
 import com.autovend.Bill;
 import com.autovend.Numeral;
+import com.autovend.devices.BillValidator;
 import com.autovend.devices.OverloadException;
 import com.autovend.products.BarcodedProduct;
 import com.autovend.products.Product;
@@ -80,7 +84,8 @@ public class PayWithCashTest {
         };
          products.add(product1);
          products.add(product2);
-
+         
+         int [] denomination= {1,2 };
 
         obj.Cash_Algorithm(controller,bp,bill,false,cashInserted, products);
         assertEquals(45, obj.getAmount_Due());;
