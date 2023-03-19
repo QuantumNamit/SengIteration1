@@ -27,7 +27,33 @@ import java.util.Currency;
 
 import static org.junit.Assert.*;
 
+public class PayWithCashTest {
 
+    /** Total bill > Cash Inserted
+     *  Amount Inserted --> 5 , Total Bill ---->50
+     *
+     * Testing if the The correct amount Due of 45 is displayed     **/
+    @Test
+    public void Total_Bill_greater_than_Cash_Insetred_Checks_AmountDue() throws OverloadException {
+
+        Barcode barcode = new Barcode(Numeral.five);
+        String description ="Item";
+        BigDecimal price = new BigDecimal(5);
+        double expected_weight=3;
+        BarcodedProduct bp = new BarcodedProduct(barcode,description,price,expected_weight);
+
+        ArrayList<BarcodedProduct> items=new ArrayList<BarcodedProduct>();
+        items.add(bp);
+
+
+        receiptPrinterSoftware rp =new receiptPrinterSoftware(items);
+
+
+        BarcodedUnit unit=new BarcodedUnit(barcode,1.2);
+        Currency currency = Currency.getInstance("USD");
+        int [] deno = {1,2};
+        BigDecimal[] coindeno=new BigDecimal[2];
+        BigDecimal a =new BigDecimal(1);
         BigDecimal b =new BigDecimal(2);
         coindeno[0]=a;
         coindeno[1]=b;
