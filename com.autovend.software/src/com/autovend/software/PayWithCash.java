@@ -10,11 +10,7 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Map;
 
-import com.autovend.*;
-import com.autovend.devices.observers.*;
-import com.autovend.devices.*;
-import com.autovend.external.*;
-import com.autovend.products.*;
+
 
 
 
