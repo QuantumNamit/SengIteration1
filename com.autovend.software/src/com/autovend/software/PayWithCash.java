@@ -38,7 +38,19 @@ import com.autovend.products.*;
  **/
 
 
+public class PayWithCash  {
 
+    private Currency currency;						// Currency variable
+    private ArrayList<BarcodedProduct> items;		// Array list for items
+    public int change;								// Variable for Change
+    public int amount_due;							// Represents the amount due
+    
+
+    // Currency Initiator
+    public PayWithCash(Currency currency) {
+       this.currency=currency;
+
+    }
     // Array list for Bills
     public  ArrayList<Bill>  allDenominationBills(ArrayList<Bill> bills){
     	// 100$ Bill Object
