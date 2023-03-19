@@ -4,7 +4,11 @@
 // Namit Aneja -30146188
 // Bheesha Kumari - 30158810
 
-
+package com.autovend.software;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Map;
 
 import com.autovend.*;
 import com.autovend.devices.observers.*;
