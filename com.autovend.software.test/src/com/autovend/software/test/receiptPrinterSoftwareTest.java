@@ -2,6 +2,8 @@
 // Abrar Zawad Safwan -30150892
 // Faiyaz Altaf Pranto - 30162576
 // Namit Aneja -30146188
+// Victor Campos
+// Bheesha Kumari
 
 package com.autovend.software.test;
 import com.autovend.software.*;
@@ -61,6 +63,7 @@ public class receiptPrinterSoftwareTest {
         controller.addPaper(controller,22);
 
         rp.printReceipt(controller,true,55,1<<20);
+        assertEquals(false, controller.outOfPaper(controller.printer,3));
         
 
     }
@@ -94,6 +97,7 @@ public class receiptPrinterSoftwareTest {
             controller.addInk(controller,1<<20);
             controller.addPaper(controller,22);
             rp.printReceipt(controller,false,55,1<<20);
+            assertEquals(true, controller.outOfPaper(controller.printer,0));
     }
 
 
@@ -126,6 +130,7 @@ public class receiptPrinterSoftwareTest {
         controller.addPaper(controller,22);
 
         rp.printReceipt(controller,true,0,1);
+        assertEquals(true, controller.outOfInk(controller.printer,0));
     }
 
     /**
@@ -155,6 +160,7 @@ public class receiptPrinterSoftwareTest {
         controller.addInk(controller,1<<20);
         controller.addPaper(controller,22);
         rp.printReceipt(controller,true,1,0);
+        assertEquals(false, controller.outOfInk(controller.printer,1));
 
     }
 
@@ -186,6 +192,7 @@ public class receiptPrinterSoftwareTest {
         controller.addInk(controller,1<<20);
         controller.addPaper(controller,22);
         rp.printReceipt(controller,true,0,0);
+        assertEquals(true, controller.outOfPaper(controller.printer,0));
     }
 
     /**
@@ -217,6 +224,7 @@ public class receiptPrinterSoftwareTest {
         controller.addInk(controller,1<<20);
         controller.addPaper(controller,22);
         rp.printReceipt(controller,true,1,0);
+        assertEquals(false, controller.outOfPaper(controller.printer,1));
 
     }
 
@@ -247,5 +255,6 @@ public class receiptPrinterSoftwareTest {
         controller.addInk(controller,1<<20);
         controller.addPaper(controller,22);
         rp.printReceipt(controller,true,1,0);
+        assertEquals(true, controller.outOfInk(controller.printer,0));
     }
 }
