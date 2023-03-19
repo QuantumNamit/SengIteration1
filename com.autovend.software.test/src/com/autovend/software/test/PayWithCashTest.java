@@ -13,7 +13,10 @@ import com.autovend.Barcode;
 import com.autovend.BarcodedUnit;
 import com.autovend.Bill;
 import com.autovend.Numeral;
-
+import com.autovend.devices.BillValidator;
+import com.autovend.devices.OverloadException;
+import com.autovend.products.BarcodedProduct;
+import com.autovend.products.Product;
 
 import org.junit.Assert;
 import org.junit.Test;
