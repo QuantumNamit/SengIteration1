@@ -6,7 +6,9 @@
 // Bheesha Kumari - 30158810
 
 
-
+package com.autovend.software.test;
+import com.autovend.software.*;
+import com.autovend.devices.*;
 import com.autovend.Barcode;
 import com.autovend.BarcodedUnit;
 import com.autovend.Bill;
