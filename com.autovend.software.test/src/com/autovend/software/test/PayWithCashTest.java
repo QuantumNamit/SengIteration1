@@ -9,10 +9,7 @@
 package com.autovend.software.test;
 import com.autovend.software.*;
 import com.autovend.devices.*;
-import com.autovend.Barcode;
-import com.autovend.BarcodedUnit;
-import com.autovend.Bill;
-import com.autovend.Numeral;
+
 import com.autovend.devices.BillValidator;
 import com.autovend.devices.OverloadException;
 import com.autovend.products.BarcodedProduct;
