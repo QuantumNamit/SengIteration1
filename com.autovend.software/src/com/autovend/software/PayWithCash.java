@@ -5,7 +5,9 @@
 // Bheesha Kumari -30158810
 
 package com.autovend.software;
-
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Map;
 
 import com.autovend.*;
