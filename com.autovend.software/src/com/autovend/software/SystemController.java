@@ -2,8 +2,8 @@
 // Abrar Zawad Safwan -30150892
 // Faiyaz Altaf Pranto - 30162576
 // Namit Aneja -30146188
-// Victor Campos
-// Bheesha Kumari
+// Victor campos - 30106934
+// Bheesha Kumari - 30158810
 
 package com.autovend.software;
 import com.autovend.Barcode;
