@@ -18,14 +18,7 @@ import com.autovend.devices.OverloadException;
 import com.autovend.products.BarcodedProduct;
 import com.autovend.products.Product;
 
-import org.junit.Assert;
-import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Currency;
-
-import static org.junit.Assert.*;
 
 public class PayWithCashTest {
 
