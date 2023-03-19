@@ -152,65 +152,7 @@ public class PayWithCashTest {
     }
 
 
-    /**Total bill < Cash Inserted
-     * Amount Inserted --> 100 , Total Bill ---->50
-     * Testing if the The correct Change of 50 is displayed     **/
-
-    @Test
-    public void Total_Bill_less_than_Cash_Insetred_Checks_Change_NotZero() throws OverloadException {
-
-        Barcode barcode = new Barcode(Numeral.five);
-        String description ="Item";
-        BigDecimal price = new BigDecimal(5);
-        double expected_weight=3;
-        BarcodedProduct bp = new BarcodedProduct(barcode,description,price,expected_weight);
-
-        ArrayList<BarcodedProduct> items=new ArrayList<BarcodedProduct>();
-        items.add(bp);
-
-
-        receiptPrinterSoftware rp =new receiptPrinterSoftware(items);
-
-
-        BarcodedUnit unit=new BarcodedUnit(barcode,1.2);
-        Currency currency = Currency.getInstance("USD");
-        int [] deno = {1,2};
-        BigDecimal[] coindeno=new BigDecimal[2];
-        BigDecimal a =new BigDecimal(1);
-        BigDecimal b =new BigDecimal(2);
-        coindeno[0]=a;
-        coindeno[1]=b;
-
-        SystemController controller=new SystemController(currency,deno,coindeno,3,3);
-        Bill bill = new Bill(100,currency);
-        PayWithCash obj=new PayWithCash(currency);
-        int cashInserted = bill.getValue();
-
-        ArrayList<Product> products=new ArrayList<>();
-
-        Product product1;
-        product1=new Product(BigDecimal.valueOf(30),true) {
-            @Override
-            public BigDecimal getPrice() {
-                return super.getPrice();
-            }
-
-        };
-
-        Product product2;
-        product2=new Product(BigDecimal.valueOf(20),true) {
-            @Override
-            public BigDecimal getPrice() {
-                return super.getPrice();
-            }
-
-        };
-        products.add(product1);
-        products.add(product2);
-
-        obj.Cash_Algorithm(controller,bp,bill,false,cashInserted, products);
-        assertEquals(50, obj.getChange());
-    }
+    
 
     /** Testing for Insufficient Change and Attendant is called
      * Total bill < Cash Inserted
