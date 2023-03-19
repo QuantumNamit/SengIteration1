@@ -61,6 +61,7 @@ public class receiptPrinterSoftwareTest {
         controller.addPaper(controller,22);
 
         rp.printReceipt(controller,true,55,1<<20);
+        
 
     }
 

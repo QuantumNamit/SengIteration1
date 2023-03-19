@@ -43,16 +43,16 @@ public class PayWithCash  {
     private ArrayList<BarcodedProduct> items;		// Array list for items
     public int change;								// Variable for Change
     public int amount_due;							// Represents the amount due
-    
+
 
     // Currency Initiator
     public PayWithCash(Currency currency) {
-       this.currency=currency;
+        this.currency=currency;
 
     }
     // Array list for Bills
     public  ArrayList<Bill>  allDenominationBills(ArrayList<Bill> bills){
-    	// 100$ Bill Object
+        // 100$ Bill Object
         Bill bill_100 = new Bill (100, currency.getInstance("CAD"));
         bills.add(0,bill_100);
 
@@ -63,7 +63,7 @@ public class PayWithCash  {
         // 20$ Bill Object
         Bill bill_20 = new Bill (20, currency.getInstance("CAD"));
         bills.add(2,bill_20);
-        
+
         // 10$ Bill Object
         Bill bill_10 = new Bill (10, currency.getInstance("CAD"));
         bills.add(3,bill_10);
@@ -84,13 +84,12 @@ public class PayWithCash  {
      * @throws DisabledException
      **/
 
-    public void Cash_Algorithm(SystemController controller,BarcodedProduct product ,Bill bill,Boolean paidinFull,int cash_Inserted, int Total_Amount) throws DisabledException, SimulationException, OverloadException {
+    public void Cash_Algorithm(SystemController controller,BarcodedProduct product ,Bill bill,Boolean paidinFull,int cash_Inserted, ArrayList<Product> products) throws DisabledException, SimulationException, OverloadException {
 
-    	int amount_paid=0;
-        
-        
+        int amount_paid=0;
+        int Total_Amount=controller.total_amount(products);
+
         controller.enable(controller);
-
 
         // Scenario 1 Cash I/O: Signals the insertion of  banknotes to the System.
         BillValidator billValidator =controller.billValidator;
@@ -136,13 +135,13 @@ public class PayWithCash  {
     }
 
     // Encapsulation for Change
-	public int getChange() {
-		return change;
-	}
-	// Encapsulation for Amount Due
-	public int getAmount_Due() {
-		return amount_due;
-	}
+    public int getChange() {
+        return change;
+    }
+    // Encapsulation for Amount Due
+    public int getAmount_Due() {
+        return amount_due;
+    }
 
 
 }

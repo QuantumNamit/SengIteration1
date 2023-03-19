@@ -12,6 +12,7 @@ import com.autovend.devices.*;
 import com.autovend.devices.observers.AbstractDeviceObserver;
 import com.autovend.devices.observers.ReceiptPrinterObserver;
 import com.autovend.products.BarcodedProduct;
+import com.autovend.products.Product;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
     private BarcodedUnit item;
     private  int paper_units;
     private int ink_units;
-    
+
 
 
     /**
@@ -100,7 +101,7 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
             return false;
         }
     }
- // Notifies the printer is out of paper
+    // Notifies the printer is out of paper
     public boolean outOfPaper(ReceiptPrinter printer,int paper_remaining){
 
         if(paper_remaining==0){
@@ -116,8 +117,8 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
         // Suspend station
         slf.disable(slf);
     }
-    
-    // Funtion to add Ink	
+
+    // Funtion to add Ink
     public void addInk(SystemController controller,int quantity) throws OverloadException {
         ReceiptPrinter printer=controller.printer;
         printer.addInk(quantity);
@@ -131,12 +132,12 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
     }
     // Inform attendant to print duplicate receipt and perform maintenance
     public void notifyAttendant_out_of_paper(ReceiptPrinter printer)  {
-    	System.out.println("Receipt printer ran out of paper. Please print a duplicate receipt and perform maintenance on the station.");
+        System.out.println("Receipt printer ran out of paper. Please print a duplicate receipt and perform maintenance on the station.");
 
     }
     // Inform attendant to print duplicate receipt and perform maintenance
     public void notifyAttendant_out_of_ink(ReceiptPrinter printer)  {
-    	System.out.println("Receipt printer ran out of ink. Please print a duplicate receipt and perform maintenance on the station.");
+        System.out.println("Receipt printer ran out of ink. Please print a duplicate receipt and perform maintenance on the station.");
 
     }
 
@@ -144,7 +145,7 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
     public void notifyCustomer_thanking() {
         System.out.println("Thankyou For Shopping with Us");
     }
-    
+
     // Informs the customer that the session is succesful
     public void notifyCustomerSessionComplete(){
         System.out.println("Session Complete ");
@@ -154,7 +155,7 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
 
 
 
-  /** Pay with cash Functions **/
+    /** Pay with cash Functions **/
 
     // Method to get value of Bill inserted
     public int getting_Bill_Value(BillValidator validator,Bill bill) {
@@ -178,10 +179,22 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
     }
 
 
+    public int total_amount(ArrayList<Product> products) {
+
+        BigDecimal total_amount_to_pay=BigDecimal.valueOf(0);
+
+        for(Product item  :products) {
+
+            total_amount_to_pay= total_amount_to_pay.add(item.getPrice());
+        }
+
+        return total_amount_to_pay.intValue();
+    }
+
     // Scenario 7. Cash I/O: Dispense the change due to the customer.
     public void giving_out_change(SystemController controller,int change, ArrayList<Bill> bills) throws DisabledException, SimulationException, OverloadException {
         // Number of Bills to output
-    	
+
         int num_of_Bills;	// Calculates how many bills of each kinds are necessary to emit
         BillSlot bill_output = controller.billOutput;	// Bill output object
         /** Creating variables for remaining change for each instance  **/
@@ -211,7 +224,7 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
             // Emit {num_of_bills} of 50
             for (int i = 0; i<num_of_Bills; i++) {
                 bill_output.emit(bills.get(1));
-              //Customer Removes the Bill
+                //Customer Removes the Bill
                 bill_output.removeDanglingBill();
             }
             remaining_change_50 = remaining_change_100 - num_of_Bills * 50;
@@ -251,10 +264,10 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
         // Checks for number of 5$  bills needed for the change
         if (remaining_change_10 >=5) {
             num_of_Bills = remaining_change_10/5;
-            
+
             for (int i = 0; i<num_of_Bills; i++) {
                 bill_output.emit(bills.get(4));
-              //Customer Removes the Bill
+                //Customer Removes the Bill
                 bill_output.removeDanglingBill();
             }
             remaining_change_5 = remaining_change_10 - num_of_Bills * 5;
@@ -267,25 +280,25 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
         // Exception 2 : Insufficient change
         if ((remaining_change_5 >0) && (remaining_change_5 <5 ) ) {
             // Disables the System
-        	controller.disable(controller);
-        	// Calls the Attendant
+            controller.disable(controller);
+            // Calls the Attendant
             controller.notifyAttendForAssistanceInChange();
 
         }
 
     }
     // Notifies Attendant for Insufficient Change
-      public void notifyAttendForAssistanceInChange(){
-          System.out.println("Attendant should help the customer to get the appropriate change");
-         
-      }
-      // Prints the Receipt
-      public void notifyPrint_Receipt(){
-          System.out.println("Print the Receipt..");
-          }
+    public void notifyAttendForAssistanceInChange(){
+        System.out.println("Attendant should help the customer to get the appropriate change");
+
+    }
+    // Prints the Receipt
+    public void notifyPrint_Receipt(){
+        System.out.println("Print the Receipt..");
+    }
 
 
-        // Disables the Self Checkout Station
+    // Disables the Self Checkout Station
     public void disable(SystemController selfCheckoutStationController){
         selfCheckoutStationController.baggingArea.disable();
         selfCheckoutStationController.billStorage.disable();
@@ -297,7 +310,7 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
         selfCheckoutStationController.printer.disable();
 
     }
-    	// Enables the Self Checkout Station for Use
+    // Enables the Self Checkout Station for Use
     public void enable(SystemController selfCheckoutStationController){
         selfCheckoutStationController.baggingArea.enable();
         selfCheckoutStationController.billStorage.enable();
@@ -309,8 +322,8 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
         selfCheckoutStationController.printer.enable();
 
 
-}
-    /** Functions from Observers **/ 
+    }
+    /** Functions from Observers **/
 
     @Override
     public void reactToEnabledEvent(AbstractDevice<? extends AbstractDeviceObserver> device) {
@@ -343,5 +356,5 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
 
     }
 
-	
+
 }
