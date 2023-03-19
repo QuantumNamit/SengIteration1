@@ -2,6 +2,8 @@
 // Abrar Zawad Safwan -30150892
 // Faiyaz Altaf Pranto - 30162576
 // Namit Aneja -30146188
+// Victor Campos
+// Bheesha Kumari
 
 package com.autovend.software;
 import com.autovend.Barcode;
@@ -192,11 +194,15 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
     }
 
     // Scenario 7. Cash I/O: Dispense the change due to the customer.
+    
     public void giving_out_change(SystemController controller,int change, ArrayList<Bill> bills) throws DisabledException, SimulationException, OverloadException {
+    	
         // Number of Bills to output
 
         int num_of_Bills;	// Calculates how many bills of each kinds are necessary to emit
+        
         BillSlot bill_output = controller.billOutput;	// Bill output object
+        
         /** Creating variables for remaining change for each instance  **/
         int remaining_change_100;
         int remaining_change_50;
@@ -213,71 +219,98 @@ public class SystemController extends SelfCheckoutStation implements ReceiptPrin
                 //Customer Removes the Bill
                 bill_output.removeDanglingBill();
             }
+            
             remaining_change_100 = change - num_of_Bills * 100;
         }
+        
         else{
             remaining_change_100=change;
         }
+        
         // Checks for number of 50$  bills needed for the change
         if (remaining_change_100 >=50) {
+        	
             num_of_Bills = remaining_change_100 / 50;
             // Emit {num_of_bills} of 50
             for (int i = 0; i<num_of_Bills; i++) {
                 bill_output.emit(bills.get(1));
                 //Customer Removes the Bill
                 bill_output.removeDanglingBill();
+                
             }
             remaining_change_50 = remaining_change_100 - num_of_Bills * 50;
+            
         }
         else{
-            remaining_change_50 =remaining_change_100;;
+        	
+            remaining_change_50 =remaining_change_100;
+            
         }
         // Checks for number of 20$  bills needed for the change
 
         if (remaining_change_50 >=20) {
+        	
             num_of_Bills =  remaining_change_50/20;
+            
             for (int i = 0; i<num_of_Bills; i++) {
                 bill_output.emit(bills.get(2));
                 //Customer Removes the Bill
                 bill_output.removeDanglingBill();
             }
+            
             remaining_change_20 = remaining_change_50 - num_of_Bills * 20;
         }
 
         else{
+        	
             remaining_change_20=remaining_change_50;
+            
         }
 
         // Checks for number of 10$  bills needed for the change
+        
         if (remaining_change_20 >=10) {
             num_of_Bills = remaining_change_20/10;
             for (int i = 0;i<num_of_Bills; i++) {
+            	
                 bill_output.emit(bills.get(3));
                 //Customer Removes the Bill
                 bill_output.removeDanglingBill();
+                
             }
+            
             remaining_change_10 = remaining_change_20 - num_of_Bills * 10;
+            
         }
         else{
+        	
             remaining_change_10=remaining_change_20;
+            
         }
+        
         // Checks for number of 5$  bills needed for the change
+        
         if (remaining_change_10 >=5) {
             num_of_Bills = remaining_change_10/5;
+            
 
             for (int i = 0; i<num_of_Bills; i++) {
                 bill_output.emit(bills.get(4));
                 //Customer Removes the Bill
                 bill_output.removeDanglingBill();
             }
+            
             remaining_change_5 = remaining_change_10 - num_of_Bills * 5;
+            
         }
         else{
+        	
             remaining_change_5=remaining_change_10;
 
         }
 
         // Exception 2 : Insufficient change
+        
         if ((remaining_change_5 >0) && (remaining_change_5 <5 ) ) {
             // Disables the System
             controller.disable(controller);
