@@ -19,7 +19,23 @@ import com.autovend.products.*;
 
 
 
+/**
+ Scenario:
+ 1. Cash I/O: Signals the insertion of coins and banknotes to the System.
+ 2. System: Reduces the remaining amount due by the value of the inserted cash.
+ 3. System: Signals to the Customer I/O the updated amount due after the insertion of each coin or
+ banknote.
+ 4. Customer I/O: Updates the amount due displayed to the customer.
+ 5. System: If the remaining amount due is greater than 0, go to 1.
+ 6. System: If the remaining amount due is less than 0, signal to Cash I/O the amount of change due.
+ 7. Cash I/O: Dispense the change due to the customer.
+ 8. Once payment in full is made and change returned to the customer, see Print Receipt.
+ **/
 
+/** Handles the Payment System that involves cash
+ *  Contains The Cash Algorithm After Cash Insertion
+ *  The SystemController class has the method to handle change
+ **/
 
 
 public class PayWithCash  {
